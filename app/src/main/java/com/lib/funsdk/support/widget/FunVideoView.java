@@ -77,8 +77,8 @@ public class FunVideoView extends LinearLayout implements IFunSDKResult {
     private OnInfoListener mInfoListener = null;
     private OnTouchListener mOnTouchListener = null;
     
-    private float FistXLocation;
-    private float FistYlocation;
+    private float fistXLocation;
+    private float fistYlocation;
     private boolean Istrigger;
     private final int LENTH = 1;
     private long time;
@@ -170,7 +170,7 @@ public class FunVideoView extends LinearLayout implements IFunSDKResult {
 				}
 				mSufaceView = new GLSurfaceView20(getContext());
 				mSufaceView.setLongClickable(true);
-				
+
 				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 	                     LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 	             this.addView(mSufaceView, lp);
@@ -222,6 +222,7 @@ public class FunVideoView extends LinearLayout implements IFunSDKResult {
 				FunSDK.SetIntAttr(mPlayerHandler, EFUN_ATTR.EOA_SET_MEDIA_VIEW_VISUAL, 1);
 			}
 		}
+
 	}
 	
 	private int getUserId() {
@@ -575,22 +576,24 @@ public class FunVideoView extends LinearLayout implements IFunSDKResult {
         final float y = ev.getY();
   
         switch (ev.getAction()) {  
-        case MotionEvent.ACTION_MOVE:  
+        case MotionEvent.ACTION_MOVE:
+			fingerTouchMove(fistXLocation,fistYlocation,x,y);
             return super.onInterceptTouchEvent(ev);
         case MotionEvent.ACTION_DOWN:
-            FistXLocation = x;
-            FistYlocation = y;
+			fistXLocation = x;
+            fistYlocation = y;
             time = ev.getDownTime();
             if(getScaleY()<-400){
                 System.out.println(getScaleY());
-            }  
+            }
+
             return  super.onInterceptTouchEvent(ev);
   
         case MotionEvent.ACTION_CANCEL:  
         case MotionEvent.ACTION_UP:  
         	System.out.println("TTTT-----ActionUP");
-        	deltaX = (int)(FistXLocation - x);  
-            deltaY = (int)(FistYlocation - y);  
+        	deltaX = (int)(fistXLocation - x);
+            deltaY = (int)(fistYlocation - y);
             deltime = times - time;
             if (count == 1) {
 				if (deltime < 100) {
@@ -883,5 +886,38 @@ public class FunVideoView extends LinearLayout implements IFunSDKResult {
 //	static int __frame_count = 0;
 	public interface OnYUVDataListener {
     	void onYUVData(byte[] data,int width,int height);
+	}
+
+	private void fingerTouchMove(float downX,float downY,float moveX, float moveY) {
+		float dx = Math.abs(moveX - downX);
+		float dy = Math.abs(moveY - downY);
+		float ratio = dy / dx;
+		if (dy >= 50 || dx >= 50) {
+			if (moveY > downY && moveX > downX) {
+				if (ratio > 1.5) {
+					Toast.makeText(mContext,"DOWN",Toast.LENGTH_LONG).show();
+				} else {
+					Toast.makeText(mContext,"RIGHT",Toast.LENGTH_LONG).show();
+				}
+			} else if (moveY > downY && moveX < downX) {
+				if (ratio > 1.5) {
+					Toast.makeText(mContext,"DOWN",Toast.LENGTH_LONG).show();
+				} else {
+					Toast.makeText(mContext,"LEFT",Toast.LENGTH_LONG).show();
+				}
+			} else if (moveY < downY && moveX < downX) {
+				if (ratio > 1.5) {
+					Toast.makeText(mContext,"UP",Toast.LENGTH_LONG).show();
+				} else {
+					Toast.makeText(mContext,"LEFT",Toast.LENGTH_LONG).show();
+				}
+			} else if (moveY < downY && moveX > downX) {
+				if (ratio > 1.5) {
+					Toast.makeText(mContext,"UP",Toast.LENGTH_LONG).show();
+				} else {
+					Toast.makeText(mContext,"RIGHT",Toast.LENGTH_LONG).show();
+				}
+			}
+		}
 	}
 }

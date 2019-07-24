@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+	xmlns:uilib="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:id="@+id/layoutPlayWnd"
@@ -13,8 +15,7 @@
         <com.lib.funsdk.support.widget.FunVideoView
             android:id="@+id/funRecVideoView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" 
-            />
+            android:layout_height="match_parent"/>
 
         <RelativeLayout
 	        android:id="@+id/videoProgressArea"
@@ -25,14 +26,25 @@
 	        android:paddingRight="15dp"
 	        android:paddingBottom="5dp"
 	        android:background="#8c000000"
-	        android:visibility="gone" >
-	
+	        android:visibility="gone"
+			tools:visibility="visible"
+			android:gravity="center_vertical">
+
+			<com.xm.ui.widget.ButtonCheck
+				android:id="@+id/btn_play"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				uilib:NormalBkg="@drawable/play"
+				uilib:SelectedBkg="@drawable/pause"
+				android:layout_centerVertical="true"
+				android:layout_alignParentLeft="true"/>
+
 	        <TextView
 	            android:id="@+id/videoProgressCurrentTime"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_alignParentLeft="true"
 	            android:layout_centerVertical="true"
+				android:layout_toRightOf="@+id/btn_play"
 	            android:textColor="#ffe0e0e0"
 	            android:textSize="12dp" />
 	
@@ -44,7 +56,7 @@
 	            android:layout_centerVertical="true"
 	            android:textColor="#ffe0e0e0"
 	            android:textSize="12dp" />
-	
+
 	        <SeekBar
 	            android:id="@+id/videoProgressSeekBar"
 	            android:layout_width="match_parent"
@@ -56,7 +68,8 @@
 	            android:paddingLeft="10dp"
 	            android:paddingRight="10dp"
 	            android:progressDrawable="@drawable/video_control_seekbar_bg"
-	            android:thumb="@drawable/video_control_seekbar_thumb_bg" />
+	            android:thumb="@drawable/video_control_seekbar_thumb_bg"
+				android:layout_centerVertical="true"/>
 	    </RelativeLayout>
     </RelativeLayout>
     
@@ -64,8 +77,7 @@
         android:id="@+id/layoutTop"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/theme_color"
-        >
+        android:background="@color/theme_color">
 
         <ImageButton
             android:id="@+id/backBtnInTopLayout"
@@ -125,13 +137,20 @@
 
     </RadioGroup>
 
+	<Button
+		android:id="@+id/btn_record_capture"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:text="@string/device_opt_capture"
+		android:layout_below="@id/layoutPlayWnd"/>
+
     <ListView
         android:id="@+id/lv_records"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/layoutPlayWnd"
-        android:layout_above="@id/rg_way_to_get_video"
-        />
+        android:layout_below="@id/btn_record_capture"
+		android:layout_above="@id/rg_way_to_get_video"/>
 
 
 

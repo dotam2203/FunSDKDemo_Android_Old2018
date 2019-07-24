@@ -1,6 +1,6 @@
 package com.example.funsdkdemo;
 
-import com.example.funsdkdemo.devices.ActivityGuideDeviceRecordList;
+import com.example.funsdkdemo.devices.playback.ActivityGuideDeviceRecordList;
 import com.example.funsdkdemo.devices.monitor.ActivityGuideMediaRealPlay;
 
 import java.util.ArrayList;

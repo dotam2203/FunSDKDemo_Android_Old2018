@@ -366,7 +366,7 @@
         <activity android:name=".devices.ActivityGuideDeviceNormalPic"/>
         <activity android:name=".devices.ActivityGuideDevicePicBrowser"/>
         <activity android:name=".devices.ActivityGuideDeviceSportPicList"/>
-        <activity android:name=".devices.ActivityGuideDeviceRecordList"
+        <activity android:name=".devices.playback.ActivityGuideDeviceRecordList"
             android:screenOrientation="portrait">
         </activity>
 

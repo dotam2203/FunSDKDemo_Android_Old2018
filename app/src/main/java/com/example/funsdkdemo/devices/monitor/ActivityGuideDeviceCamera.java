@@ -17,8 +17,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -47,7 +45,7 @@ import com.example.funsdkdemo.ActivityDemo;
 import com.example.funsdkdemo.R;
 import com.example.funsdkdemo.devices.ActivityDeviceFishEyeInfo;
 import com.example.funsdkdemo.devices.ActivityGuideDevicePictureList;
-import com.example.funsdkdemo.devices.ActivityGuideDeviceRecordList;
+import com.example.funsdkdemo.devices.playback.ActivityGuideDeviceRecordList;
 import com.example.funsdkdemo.devices.ActivityGuideDeviceSportPicList;
 import com.example.funsdkdemo.devices.settings.ActivityGuideDeviceSetup;
 import com.example.funsdkdemo.devices.tour.view.TourActivity;
@@ -433,7 +431,7 @@ public class ActivityGuideDeviceCamera
 			startPictureList();
 		}
 			break;
-		case R.id.btnDevRecord: // 远程设备录像列表
+		case R.id.btnDevRecord: // 远程设备录像列表（回放）
 		{
 			startRecordList();
 		}

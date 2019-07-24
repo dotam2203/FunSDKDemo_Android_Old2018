@@ -1689,7 +1689,7 @@ public class FunSupport implements IFunSDKResult {
 
     public boolean requestDeviceSearchPicture(FunDevice funDevice,
                                               OPCompressPic opCompressPic, String filePath, int seq) {
-        int result = FunSDK.DevSearchPicture(getHandler(),                  //获取缩略图该接口只提供运动相机使用
+        int result = FunSDK.DevSearchPicture(getHandler(),
                 funDevice.getDevSn(),
                 EDEV_JSON_ID.COMPRESS_PICTURE_REQ, 50000, 2000,
                 opCompressPic.getSendMsg().getBytes(),

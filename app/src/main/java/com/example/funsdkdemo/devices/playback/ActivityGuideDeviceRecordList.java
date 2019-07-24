@@ -1,4 +1,4 @@
-package com.example.funsdkdemo.devices;
+package com.example.funsdkdemo.devices.playback;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -9,6 +9,7 @@ import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
@@ -28,8 +29,8 @@ import android.widget.Toast;
 import com.basic.G;
 import com.example.funsdkdemo.ActivityDemo;
 import com.example.funsdkdemo.R;
-import com.example.funsdkdemo.adapter.DeviceCameraPicAdapter;
-import com.example.funsdkdemo.adapter.DeviceCameraRecordAdapter;
+import com.example.funsdkdemo.adapter.DeviceCameraRecordFileAdapter;
+import com.example.funsdkdemo.adapter.DeviceCameraRecordTimeAdapter;
 import com.example.funsdkdemo.entity.DownloadInfo;
 import com.lib.FunSDK;
 import com.lib.SDKCONST;
@@ -50,6 +51,7 @@ import com.lib.sdk.struct.H264_DVR_FILE_DATA;
 import com.lib.sdk.struct.H264_DVR_FINDINFO;
 import com.lib.sdk.struct.OPRemoveFileJP;
 import com.lib.sdk.struct.SDK_SearchByTime;
+import com.xm.ui.widget.ButtonCheck;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -72,14 +74,15 @@ import java.util.Locale;
 public class ActivityGuideDeviceRecordList extends ActivityDemo
         implements View.OnClickListener, OnFunDeviceRecordListener
         ,OnFunDeviceOptListener, OnItemClickListener, AdapterView.OnItemLongClickListener, OnPreparedListener
-        , OnSeekBarChangeListener, RadioGroup.OnCheckedChangeListener, OnErrorListener, OnFunDeviceFileListener{
+        , OnSeekBarChangeListener, RadioGroup.OnCheckedChangeListener,
+        OnErrorListener, OnFunDeviceFileListener{
 
     private FunDevice mFunDevice = null;
     private Calendar calendar;
     private boolean byFile = true;
 
-    private DeviceCameraRecordAdapter mRecordByTimeAdapter;
-    private DeviceCameraPicAdapter mRecordByFileAdapter;
+    private DeviceCameraRecordTimeAdapter mRecordByTimeAdapter;
+    private DeviceCameraRecordFileAdapter mRecordByFileAdapter;
 
     private TextView mTextTitle = null;
     private ImageButton mBtnBack = null;
@@ -100,6 +103,7 @@ public class ActivityGuideDeviceRecordList extends ActivityDemo
     private int MaxProgress;
     private int mPosition;
     private OPRemoveFileJP mOPRemoveFileJP;
+    private ButtonCheck btnPlayState;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,6 +155,38 @@ public class ActivityGuideDeviceRecordList extends ActivityDemo
         // 2. 按照时间(日期)获取远程设备的录像列表  - onSearchFile()
         //onSearchFile();
         ((RadioButton)findViewById(R.id.rb_by_file)).setChecked(true);
+
+        btnPlayState = findViewById(R.id.btn_play);
+        //播放和暂停
+        btnPlayState.setOnButtonClick(new ButtonCheck.OnButtonClickListener() {
+            @Override
+            public boolean onButtonClick(ButtonCheck buttonCheck, boolean b) {
+                if (mVideoView.isPlaying()) {
+                    mVideoView.pause();
+                }else {
+                    mVideoView.resume();
+                }
+                return true;
+            }
+        });
+
+        //抓图
+        findViewById(R.id.btn_record_capture).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mVideoView.isPlaying()) {
+                    final String path = mVideoView.captureImage(null);
+                    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ActivityGuideDeviceRecordList.this,"Capture Ok:" + path,Toast.LENGTH_LONG).show();
+                        }
+                    },500);
+                }
+            }
+        });
+
+        FunPath.onCreateSptTempPath(mFunDevice.getSerialNo());
     }
 
     @Override
@@ -392,7 +428,7 @@ public class ActivityGuideDeviceRecordList extends ActivityDemo
         // 3. 在回调中处理录像列表结果 - onRequestRecordListSuccess()
         // 显示录像文件列表
 
-        mRecordByTimeAdapter = new DeviceCameraRecordAdapter(this, files);
+        mRecordByTimeAdapter = new DeviceCameraRecordTimeAdapter(this, files);
         mRecordList.setAdapter(mRecordByTimeAdapter);
 
         hideWaitDialog();
@@ -421,7 +457,7 @@ public class ActivityGuideDeviceRecordList extends ActivityDemo
             if (files.size() == 0) {
                 showToast(R.string.device_camera_video_list_empty);
             } else {
-                mRecordByFileAdapter = new DeviceCameraPicAdapter(this, mRecordList, mFunDevice, files);
+                mRecordByFileAdapter = new DeviceCameraRecordFileAdapter(this, mRecordList, mFunDevice, files);
                 mRecordList.setAdapter(mRecordByFileAdapter);
                 if (mRecordByFileAdapter != null) {
                     mRecordByFileAdapter.release();
@@ -494,6 +530,8 @@ public class ActivityGuideDeviceRecordList extends ActivityDemo
 		message.what = MESSAGE_SET_IMAGE;
 		message.obj = path;
 		mHandler.sendMessageDelayed(message, 200);
+
+		btnPlayState.setBtnValue(1);
 	}
 
 	@Override

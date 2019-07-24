@@ -160,7 +160,7 @@ public class ActivityGuideDevicePictureList extends ActivityDemo implements OnCl
         if (null != mDeviceCameraPicAdapter) {
             mDeviceCameraPicAdapter.release();
         }
-        
+
         super.onDestroy();
     }
 
@@ -210,7 +210,7 @@ public class ActivityGuideDevicePictureList extends ActivityDemo implements OnCl
         mDeviceCameraPicAdapter.resetDispItem();
         onSearchPicture(calendar.getTime(), 0);
     }
-    
+
     public void  requestPicDate(){
     	opsCalendar = (DevCmdOPSCalendar) mFunDevice.checkConfig(DevCmdOPSCalendar.CONFIG_NAME);
     	opsCalendar.setEvent("*");
@@ -251,7 +251,7 @@ public class ActivityGuideDevicePictureList extends ActivityDemo implements OnCl
         initSearchInfo(findInfo, date, 0, flag);
         FunSupport.getInstance().requestDeviceFileList(mFunDevice, findInfo);
     }
-    
+
     private void onSearchMorePicture(Date date, int flag){
     	findInfo = new H264_DVR_FINDINFO();
     	findInfo.st_1_nFileType = pictureType;
@@ -297,7 +297,7 @@ public class ActivityGuideDevicePictureList extends ActivityDemo implements OnCl
 
     @Override
     public void onDeviceGetConfigSuccess(FunDevice funDevice, String configName, int nSeq) {
-    	
+
     	if (configName.equals(DevCmdOPSCalendar.CONFIG_NAME)) {
 			DevCmdOPSCalendar calendar = (DevCmdOPSCalendar) funDevice.getConfig(DevCmdOPSCalendar.CONFIG_NAME);
 			List<String> dates = new ArrayList<String>();
@@ -319,13 +319,13 @@ public class ActivityGuideDevicePictureList extends ActivityDemo implements OnCl
     }
 
     @Override
-    public void onDeviceSetConfigSuccess(final FunDevice funDevice, 
+    public void onDeviceSetConfigSuccess(final FunDevice funDevice,
     		final String configName) {
 
     }
 
     @Override
-    public void onDeviceSetConfigFailed(final FunDevice funDevice, 
+    public void onDeviceSetConfigFailed(final FunDevice funDevice,
     		final String configName, final Integer errCode) {
 
     }
@@ -339,12 +339,12 @@ public class ActivityGuideDevicePictureList extends ActivityDemo implements OnCl
     public void onDeviceChangeInfoFailed(final FunDevice funDevice, final Integer errCode) {
         // TODO Auto-generated method stub
     }
-    
+
     @Override
     public void onDeviceOptionSuccess(final FunDevice funDevice, final String option) {
 		// TODO Auto-generated method stub
 	}
-	
+
     @Override
 	public void onDeviceOptionFailed(final FunDevice funDevice, final String option, final Integer errCode) {
 		// TODO Auto-generated method stub
@@ -361,7 +361,7 @@ public class ActivityGuideDevicePictureList extends ActivityDemo implements OnCl
             flag = true;
         }
     }
-    
+
     private void notifyDataSetInvalidated() {
     	if (null != mDeviceCameraPicAdapter) {
     		mDeviceCameraPicAdapter.notifyDataSetInvalidated();

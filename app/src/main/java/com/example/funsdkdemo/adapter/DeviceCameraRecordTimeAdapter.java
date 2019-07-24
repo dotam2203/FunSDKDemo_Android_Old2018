@@ -15,14 +15,14 @@ import java.util.List;
 /**
  * Created by Jeff on 16/5/20.
  */
-public class DeviceCameraRecordAdapter extends BaseAdapter {
+public class DeviceCameraRecordTimeAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mInflater;
     private List<FunDevRecordFile> recordFiles;
     private int mPlayingIndex = -1;
 
-    public DeviceCameraRecordAdapter(Context context, List<FunDevRecordFile> files) {
+    public DeviceCameraRecordTimeAdapter(Context context, List<FunDevRecordFile> files) {
         this.mContext = context;
         this.recordFiles = files;
         mInflater = LayoutInflater.from(mContext);
@@ -59,7 +59,7 @@ public class DeviceCameraRecordAdapter extends BaseAdapter {
         if (null == convertView) {
             convertView = mInflater.inflate(
                     R.layout.item_device_camera_record, parent, false);
-            viewHolder = new DeviceCameraRecordAdapter.ViewHolder();
+            viewHolder = new DeviceCameraRecordTimeAdapter.ViewHolder();
             viewHolder.ivRecordShot = (ImageView) convertView.findViewById(R.id.iv_record_shot);
             viewHolder.tvRecordTime = (TextView) convertView.findViewById(R.id.tv_record_time);
             convertView.setTag(viewHolder);
