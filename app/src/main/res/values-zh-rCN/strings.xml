@@ -770,4 +770,10 @@
     <string name="timimg_ptz_tour_enable">定时巡航</string>
     <string name="One_Key_Mask_Video">一键遮蔽</string>
     <string name="Open_Shelter">开启遮蔽</string>
+    <string name="Detect_Track">移动追踪</string>
+    <string name="Detect_Track_Switch">移动追踪开关</string>
+    <string name="Intelligent_sensitivity">灵敏度</string>
+    <string name="Intelligent_level_Height">高</string>
+    <string name="Intelligent_level_Middle">中</string>
+    <string name="Intelligent_level_Low">低</string>
 </resources>

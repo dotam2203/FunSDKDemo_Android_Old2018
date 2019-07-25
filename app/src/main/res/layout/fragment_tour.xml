@@ -133,6 +133,51 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_e5e5e5"
+                android:paddingLeft="18dp"
+                android:paddingStart="18dp"
+                android:minHeight="45dp">
+                <View
+                    android:id="@+id/detect_track_tip_color"
+                    android:layout_width="3dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/theme_color"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/detect_track_tip_color"
+                    android:layout_toEndOf="@+id/detect_track_tip_color"
+                    android:gravity="center_vertical|start"
+                    android:text="@string/Detect_Track"/>
+            </RelativeLayout>
+
+            <com.xm.ui.widget.ListSelectItem
+                android:id="@+id/lsi_detect_track_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                uilib:ImageRight1="@drawable/icon_checked_no"
+                uilib:ImageRight2="@drawable/icon_checked_yes"
+                uilib:ItemTitleColor="@color/login_page_color"
+                uilib:Title="@string/Detect_Track_Switch"
+                android:layout_weight="1"
+                />
+            <com.xm.ui.widget.SpinnerSelectItem
+                android:id="@+id/ssi_sensitivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                uilib:title="@string/Intelligent_sensitivity"
+                uilib:left_padding="23dp"
+                android:layout_weight="1"/>
+
             <TextView
                 android:id="@+id/tv_timimg_ptz_tour_support"
                 android:layout_width="wrap_content"

@@ -1,17 +1,23 @@
 package com.example.funsdkdemo;
 
-import java.util.Arrays;
-import java.util.List;
-
-import com.example.common.DialogWaitting;
-import com.example.common.UIFactory;
-
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.example.common.DialogWaitting;
+import com.example.common.UIFactory;
+import com.xm.ui.widget.SpinnerSelectItem;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ActivityDemo extends FragmentActivity {
 	private DialogWaitting mWaitDialog = null;
@@ -123,5 +129,87 @@ public class ActivityDemo extends FragmentActivity {
 			return mNavRightView;
 		}
 		return null;
+	}
+
+	protected int getIntValue(View layout,int id) {
+		if (layout == null) {
+			return 0;
+		}
+		View v = layout.findViewById(id);
+		return getIntValue(v);
+	}
+
+	protected int getIntValue(View v) {
+		if (v == null) {
+			return 0;
+		}
+		if (v instanceof EditText) {
+			EditText v0 = (EditText) v;
+			return Integer.valueOf(v0.getText().toString());
+		} else if (v instanceof CheckBox) {
+			CheckBox v0 = (CheckBox) v;
+			return v0.isChecked() ? 1 : 0;
+		} else if (v instanceof SeekBar) {
+			SeekBar v0 = (SeekBar) v;
+			return v0.getProgress();
+		} else if (v instanceof Spinner) {
+			Spinner sp = (Spinner) v;
+			Object iv = v.getTag();
+			if (iv != null && iv instanceof int[]) {
+				int[] values = (int[]) iv;
+				int i = sp.getSelectedItemPosition();
+				if (i >= 0 && i < values.length) {
+					return values[i];
+				}
+				return 0;
+			}
+		} else {
+//            System.err.println("GetIntValue:" + id);
+		}
+		return 0;
+	}
+
+	protected int initSpinnerText(Spinner sp, String[] texts, int[] values) {
+		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item,
+				texts);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		sp.setAdapter(adapter);
+		if (values == null) {
+			values = new int[texts.length];
+			for (int i = 0; i < texts.length; ++i) {
+				values[i] = i;
+			}
+		}
+		sp.setTag(values);
+		return 0;
+	}
+
+	public int setValue(View v, int value) {
+		if (v instanceof SpinnerSelectItem) {
+			v = ((SpinnerSelectItem) v).getSpinner();
+		}
+		if (v instanceof EditText) {
+			EditText v0 = (EditText) v;
+			v0.setText(String.valueOf(value));
+		} else if (v instanceof CheckBox) {
+			CheckBox v0 = (CheckBox) v;
+			v0.setChecked(value != 1);
+		} else if (v instanceof SeekBar) {
+			SeekBar v0 = (SeekBar) v;
+			v0.setProgress(value);
+		} else if (v instanceof Spinner) {
+			Spinner sp = (Spinner) v;
+			Object iv = v.getTag();
+			if (iv != null && iv instanceof int[]) {
+				int values[] = (int[]) iv;
+				for (int i = 0; i < values.length; ++i) {
+					if (value == values[i]) {
+						sp.setSelection(i);
+						break;
+					}
+				}
+			}
+		}
+		return 0;
 	}
 }

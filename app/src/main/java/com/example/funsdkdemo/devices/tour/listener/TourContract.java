@@ -50,7 +50,10 @@ public class TourContract {
         void onTmimgPtzTourResult(boolean isEnable,int timeInterval);
 
         void onSaveTimimgPtzTourResult(boolean isSuccess);
+		
+		void onUpdateDetectTrack(boolean enable,int sensitivity);
 
+		void onSaveDetectTrack(boolean isSuccess);
     }
 
 
@@ -128,6 +131,23 @@ public class TourContract {
         void getTimimgPtzTour();
 
         void setTimingPtzTour(boolean isEnable,int timeInterval);
+
+        /**
+         * 获取人形跟随
+         */
+        void getDetectTrack();
+
+        /**
+         * 设置人形跟随开关
+         * @param iSwitch
+         */
+        void setDetectTrackSwitch(int iSwitch);
+
+        /**
+         * 设置人形跟随灵敏度
+         * @param sensitivity
+         */
+        void setSensitivity(int sensitivity);
 
     }
 }

@@ -760,4 +760,10 @@
     <string name="timimg_ptz_tour_enable">Timimg Tour</string>
     <string name="One_Key_Mask_Video">One Key Shading</string>
     <string name="Open_Shelter">Open Shelter</string>
+    <string name="Detect_Track">Auto Track</string>
+    <string name="Detect_Track_Switch">Auto Track Switch</string>
+    <string name="Intelligent_sensitivity">Sensitivity</string>
+    <string name="Intelligent_level_Height">Hight</string>
+    <string name="Intelligent_level_Middle">Middle</string>
+    <string name="Intelligent_level_Low">Low</string>
 </resources>

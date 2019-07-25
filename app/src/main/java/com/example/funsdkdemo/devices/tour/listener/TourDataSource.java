@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.lib.MsgContent;
 import com.lib.funsdk.support.config.TimimgPtzTourBean;
+import com.lib.sdk.bean.DetectTrackBean;
 
 /**
  * Created by ccy on 2017-09-28.
@@ -81,5 +82,17 @@ public interface TourDataSource {
     void getTimimgPtzTour(TourCallback callback);
 
     void setTimingPtzTour(TimimgPtzTourBean timingPtzTour,TourCallback callback);
+
+
+    /**
+     * 获取人形跟随
+     */
+    void getDetectTrack(TourCallback rspCallback);
+
+    /**
+     * 设置人形跟随开关
+     * @param iSwitch
+     */
+    void setDetectTrack(DetectTrackBean detectTrackSwitch,TourCallback rspCallback);
 
 }

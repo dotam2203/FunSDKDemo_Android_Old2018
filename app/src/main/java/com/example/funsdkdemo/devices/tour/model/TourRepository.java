@@ -16,6 +16,7 @@ import com.lib.IFunSDKResult;
 import com.lib.MsgContent;
 import com.lib.funsdk.support.config.TimimgPtzTourBean;
 import com.lib.funsdk.support.models.FunDevice;
+import com.lib.sdk.bean.DetectTrackBean;
 import com.lib.sdk.bean.HandleConfigData;
 import com.lib.sdk.bean.OPPTZControlBean;
 
@@ -196,6 +197,25 @@ public class TourRepository implements TourDataSource, IFunSDKResult {
     }
 
     @Override
+    public void getDetectTrack(TourCallback callback) {
+        listeners.put(DetectTrackBean.JSON_NAME + "_Get",callback);
+        FunSDK.DevGetConfigByJson(userId,funDevice.getDevSn(), DetectTrackBean.JSON_NAME,
+                2048
+                , -1
+                , 5000
+                , 0);
+    }
+
+    @Override
+    public void setDetectTrack(DetectTrackBean detectTrackSwitch, TourCallback callback) {
+        listeners.put(DetectTrackBean.JSON_NAME + "_Set",callback);
+        FunSDK.DevSetConfigByJson(userId,funDevice.getDevSn(), DetectTrackBean.JSON_NAME,
+                HandleConfigData.getSendData(HandleConfigData.getFullName(DetectTrackBean.JSON_NAME,-1),
+                        "0x08",detectTrackSwitch),-1,5000,0);
+    }
+
+
+    @Override
     public int OnFunSDKResult(Message msg, MsgContent ex) {
 
         switch (msg.what) {
@@ -272,18 +292,55 @@ public class TourRepository implements TourDataSource, IFunSDKResult {
                             }
                         }
                         break;
+                    case DetectTrackBean.JSON_NAME:
+                        if(msg.arg1 < 0){
+                            if (listeners.get(DetectTrackBean.JSON_NAME + "_Get") != null) {
+                                listeners.get(DetectTrackBean.JSON_NAME + "_Get").onError(msg,ex,"");
+                            }
+                            return 0;
+                        }
+                        try {
+                            if (handleConfigData.getDataObj(G.ToString(ex.pData),DetectTrackBean.class)) {
+                                DetectTrackBean detectTrackBean = (DetectTrackBean) handleConfigData.getObj();
+                                if (listeners.get(DetectTrackBean.JSON_NAME + "_Get") != null) {
+                                    listeners.get(DetectTrackBean.JSON_NAME + "_Get").onSuccess(detectTrackBean);
+                                }
+                            }
+                        } catch (Exception e) {
+                            //可能是ex.pData 为空，也可能强转出错
+                            if (listeners.get(DetectTrackBean.JSON_NAME) != null) {
+                                listeners.get(DetectTrackBean.JSON_NAME).onError(null, null, context.getString(R.string.request_data_error));
+                            }
+                        }
+                        break;
                 }
                 break;
             case EUIMSG.DEV_SET_JSON:
-                if(msg.arg1 < 0){
-                    if (listeners.get(TimimgPtzTourBean.JSON_NAME + "_Set") != null) {
-                        listeners.get(TimimgPtzTourBean.JSON_NAME + "_Set").onError(msg,ex,"");
-                    }
-                    return 0;
-                }
+                switch (ex.str) {
+                    case TimimgPtzTourBean.JSON_NAME:
+                        if(msg.arg1 < 0){
+                            if (listeners.get(TimimgPtzTourBean.JSON_NAME + "_Set") != null) {
+                                listeners.get(TimimgPtzTourBean.JSON_NAME + "_Set").onError(msg,ex,"");
+                            }
+                            return 0;
+                        }
 
-                if (listeners.get(TimimgPtzTourBean.JSON_NAME + "_Set") != null) {
-                    listeners.get(TimimgPtzTourBean.JSON_NAME + "_Set").onSuccess(true);
+                        if (listeners.get(TimimgPtzTourBean.JSON_NAME + "_Set") != null) {
+                            listeners.get(TimimgPtzTourBean.JSON_NAME + "_Set").onSuccess(true);
+                        }
+                        break;
+                    case DetectTrackBean.JSON_NAME:
+                        if(msg.arg1 < 0){
+                            if (listeners.get(DetectTrackBean.JSON_NAME + "_Set") != null) {
+                                listeners.get(DetectTrackBean.JSON_NAME + "_Set").onError(msg,ex,"");
+                            }
+                            return 0;
+                        }
+
+                        if (listeners.get(DetectTrackBean.JSON_NAME + "_Set") != null) {
+                            listeners.get(DetectTrackBean.JSON_NAME + "_Set").onSuccess(true);
+                        }
+                        break;
                 }
                 break;
             case EUIMSG.DEV_CMD_EN: //处理“操作巡航线”、“操作预置点”

@@ -13,8 +13,10 @@ import com.example.funsdkdemo.devices.tour.model.bean.PTZTourBean;
 import com.example.funsdkdemo.devices.tour.model.bean.TourBean;
 import com.example.funsdkdemo.devices.tour.model.bean.TourState;
 import com.lib.MsgContent;
+import com.lib.SDKCONST;
 import com.lib.funsdk.support.config.TimimgPtzTourBean;
 import com.lib.funsdk.support.models.FunDevice;
+import com.lib.sdk.bean.DetectTrackBean;
 import com.lib.sdk.bean.OPPTZControlBean;
 
 import java.util.List;
@@ -32,6 +34,7 @@ public class TourPresenter implements TourContract.ITourPresenter{
     private TourDataSource dataSource;      //持有M
     private TourState mCurrentTourState = TourState.IDLE; //当前巡航状态
     private TimimgPtzTourBean timimgPtzTourBean;
+    private DetectTrackBean detectTrackBean;
     public TourPresenter(Context context, TourContract.ITourView tourView,FunDevice funDevice) {
         this.context = context;
         this.tourView = tourView;
@@ -287,6 +290,79 @@ public class TourPresenter implements TourContract.ITourPresenter{
         }
     }
 
+    @Override
+    public void getDetectTrack() {
+        tourView.showLoading(true, "");
+        dataSource.getDetectTrack(new TourDataSource.TourCallback() {
+            @Override
+            public void onSuccess(@Nullable Object object) {
+                detectTrackBean = (DetectTrackBean) object;
+                if (tourView != null && detectTrackBean != null) {
+                    tourView.onUpdateDetectTrack(detectTrackBean.getEnable() == SDKCONST.Switch.Open,
+                            detectTrackBean.getSensitivity());
+                }
+            }
+
+            @Override
+            public void onError(Message msg, MsgContent ex, String extraStr) {
+                if (tourView != null) {
+                    tourView.onFailed(msg,ex,extraStr);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void setDetectTrackSwitch(int iSwitch) {
+        if (detectTrackBean == null) {
+            return;
+        }
+
+        tourView.showLoading(true, "");
+
+        detectTrackBean.setEnable(iSwitch);
+        dataSource.setDetectTrack(detectTrackBean,new TourDataSource.TourCallback() {
+            @Override
+            public void onSuccess(@Nullable Object object) {
+                if (tourView != null ) {
+                    tourView.onSaveDetectTrack(true);
+                }
+            }
+
+            @Override
+            public void onError(Message msg, MsgContent ex, String extraStr) {
+                if (tourView != null) {
+                    tourView.onFailed(msg,ex,extraStr);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void setSensitivity(int sensitivity) {
+        if (detectTrackBean == null) {
+            return;
+        }
+
+        tourView.showLoading(true, "");
+
+        detectTrackBean.setSensitivity(sensitivity);
+        dataSource.setDetectTrack(detectTrackBean,new TourDataSource.TourCallback() {
+            @Override
+            public void onSuccess(@Nullable Object object) {
+                if (tourView != null ) {
+                    tourView.onSaveDetectTrack(true);
+                }
+            }
+
+            @Override
+            public void onError(Message msg, MsgContent ex, String extraStr) {
+                if (tourView != null) {
+                    tourView.onFailed(msg,ex,extraStr);
+                }
+            }
+        });
+    }
 
     //简单的统一错误处理
     private void handleCommonError(Message msg, MsgContent ex, String extraStr) {

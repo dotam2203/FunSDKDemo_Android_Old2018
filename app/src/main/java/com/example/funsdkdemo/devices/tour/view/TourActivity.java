@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ import com.lib.funsdk.support.models.FunDevice;
 import com.lib.funsdk.support.utils.TimeUtils;
 import com.lib.funsdk.support.widget.CornerPopupWindow;
 import com.xm.ui.widget.ListSelectItem;
+import com.xm.ui.widget.SpinnerSelectItem;
 
 
 /**
@@ -65,11 +68,8 @@ public class TourActivity extends ActivityDemo implements TourContract.ITourView
     private SeekBar sbTimimgPtzTourInterval;
     private ListSelectItem lsiTimimgPtzTourInterval;
     private TextView tvTimimgPtzTourSupport;
-    public static TourActivity newInstance() {
-        return new TourActivity();
-    }
-
-
+    private ListSelectItem lsiDetectTrackSwitch;
+    private SpinnerSelectItem ssiSensitivity;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,6 +143,48 @@ public class TourActivity extends ActivityDemo implements TourContract.ITourView
         });
 
         tvTimimgPtzTourSupport = findViewById(R.id.tv_timimg_ptz_tour_support);
+
+        lsiDetectTrackSwitch = findViewById(R.id.lsi_detect_track_switch);
+
+        lsiDetectTrackSwitch.setOnRightClick(new ListSelectItem.OnRightImageClickListener() {
+            @Override
+            public void onClick(ListSelectItem parent, View v) {
+                if (lsiDetectTrackSwitch.getRightValue() == SDKCONST.Switch.Open) {
+                    tourPresenter.setDetectTrackSwitch(SDKCONST.Switch.Open);
+                }else {
+                    tourPresenter.setDetectTrackSwitch(SDKCONST.Switch.Close);
+                }
+            }
+        });
+
+        initDetectTrackSnitivity();
+    }
+
+    private void initDetectTrackSnitivity() {
+        String[] keys = new String[] {
+                getString(R.string.Intelligent_level_Low),
+                getString(R.string.Intelligent_level_Middle),
+                getString(R.string.Intelligent_level_Height)
+        };
+        int[] values = new int[]{
+                0,
+                1,
+                2,
+        };
+
+        ssiSensitivity = findViewById(R.id.ssi_sensitivity);
+
+        initSpinnerText(ssiSensitivity.getSpinner(),keys,values);
+        ssiSensitivity.setOnItemSelectedListener(new SpinnerSelectItem.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(ViewGroup viewGroup, AdapterView<?> adapterView, View view, int i, long l, boolean fromUser) {
+                if (fromUser) {
+                    if (viewGroup == ssiSensitivity) {
+                        tourPresenter.setSensitivity(getIntValue(ssiSensitivity.getSpinner()));
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -186,6 +228,7 @@ public class TourActivity extends ActivityDemo implements TourContract.ITourView
         tourPresenter = new TourPresenter(this, this,funDevice);
         tourPresenter.getTour();
         tourPresenter.getTimimgPtzTour();
+        tourPresenter.getDetectTrack();
 
         if (FunSDK.GetDevAbility(funDevice.getDevSn(),"OtherFunction/SupportTimingPtzTour") > 0) {
             tvTimimgPtzTourSupport.setText("定时巡航功能是支持的，可以正常操作");
@@ -485,4 +528,19 @@ public class TourActivity extends ActivityDemo implements TourContract.ITourView
             showToast(R.string.set_config_s);
         }
     }
+
+    @Override
+    public void onUpdateDetectTrack(boolean enable, int sensitivity) {
+        lsiDetectTrackSwitch.setRightImage(enable ? SDKCONST.Switch.Open : SDKCONST.Switch.Close);
+        setValue(ssiSensitivity,sensitivity);
+    }
+
+    @Override
+    public void onSaveDetectTrack(boolean isSuccess) {
+        dismissLoading();
+        if (isSuccess) {
+            showToast(R.string.set_config_s);
+        }
+    }
+
 }
