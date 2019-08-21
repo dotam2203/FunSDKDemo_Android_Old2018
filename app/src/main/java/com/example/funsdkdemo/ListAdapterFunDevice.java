@@ -49,6 +49,8 @@ public class ListAdapterFunDevice extends BaseExpandableListAdapter {
 		void onFunDeviceWakeUp(FunDevice funDevice);
 
 		void onFunDeviceCloud(FunDevice funDevice);
+
+		void onFunDeviceTest(FunDevice funDevice);
 	}
 
 	private Context mContext = null;
@@ -136,6 +138,7 @@ public class ListAdapterFunDevice extends BaseExpandableListAdapter {
 			holder.btn433Control = (Button) convertView.findViewById(R.id.btnDev433_setting);
 			holder.btn433Add = (Button) convertView.findViewById(R.id.btnDev433Add);
 			holder.btnDevWakeUp = convertView.findViewById(R.id.btnDevWakeUp);
+			holder.btnTest = convertView.findViewById(R.id.btnTest);
 			holder.ivCloud = convertView.findViewById(R.id.ivCloud);
 			holder.tvCloud = convertView.findViewById(R.id.tvCloud);
 			holder.llCloud = convertView.findViewById(R.id.llCloud);
@@ -251,6 +254,16 @@ public class ListAdapterFunDevice extends BaseExpandableListAdapter {
 					}
 				}
 			});
+			holder.btnTest.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					// 删除设备
+					FunDevice funDevice = (FunDevice) view.getTag();
+					if (null != funDevice && null != mListener) {
+						mListener.onFunDeviceTest(funDevice);
+					}
+				}
+			});
 			if (mCanRenamed) {
 				holder.btnRename.setVisibility(View.VISIBLE);
 			} else {
@@ -292,6 +305,7 @@ public class ListAdapterFunDevice extends BaseExpandableListAdapter {
 		holder.btn433Add.setTag(funDevice);
 		holder.btnDevWakeUp.setTag(funDevice);
 		holder.llCloud.setTag(funDevice);
+		holder.btnTest.setTag(funDevice);
 		if (isDeviceConnected(funDevice)) {
 			holder.btnConnect.setText(R.string.device_opt_disconnect);
 		} else {
@@ -392,6 +406,7 @@ public class ListAdapterFunDevice extends BaseExpandableListAdapter {
 		Button btn433Control;
 		Button btn433Add;
 		Button btnDevWakeUp;
+		Button btnTest;
 		ImageView ivCloud;
 		LinearLayout llCloud;
 		TextView tvCloud;

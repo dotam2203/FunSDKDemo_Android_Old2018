@@ -13,14 +13,14 @@ import java.util.List;
 
 public class StorageInfoBean {
 
-	public int PartNumber;
-	public int PlysicalNo;
+	public long PartNumber;
+	public long PlysicalNo;
 	public List<Partition> Partition;
 
 	public static class Partition {
-		public int Status;
-		public int DirverType;
-		public int LogicSerialNo;
+		public long Status;
+		public long DirverType;
+		public long LogicSerialNo;
 		public boolean IsCurrent;
 		public String NewEndTime;
 		public String RemainSpace;

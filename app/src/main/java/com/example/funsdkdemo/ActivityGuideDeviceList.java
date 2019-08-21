@@ -22,6 +22,7 @@ import com.example.funsdkdemo.alarm.ActivityGuideDeviceAlarmResult;
 import com.example.funsdkdemo.cloud.ActivityDevCloudDate;
 import com.example.funsdkdemo.devices.ActivityGuideDeviceTransCom;
 import com.example.funsdkdemo.devices.lowpower.LowPowerDevActivity;
+import com.example.funsdkdemo.test.TestActivity;
 import com.lib.MsgContent;
 import com.lib.funsdk.support.FunError;
 import com.lib.funsdk.support.FunSupport;
@@ -462,6 +463,13 @@ public class ActivityGuideDeviceList extends ActivityDemo
         Intent intent = new Intent(this,ActivityDevCloudDate.class);
         intent.putExtra("FUN_DEVICE_ID",funDevice.getId());
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onFunDeviceTest(FunDevice funDevice) {
+        Intent intent = new Intent(this, TestActivity.class);
+        intent.putExtra("devId",funDevice.getDevSn());
         startActivity(intent);
     }
 

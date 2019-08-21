@@ -665,7 +665,7 @@
     <string name="unlock">解锁</string>
     <string name="door_lock_open_s">解锁成功</string>
     <string name="door_lock_open_f">解锁失败</string>
-    <string name="device_doorlock">门锁</string>
+    <string name="device_doorlock">门锁门铃(低功耗)相关配置</string>
     <string name="flip">翻转</string>
     <string name="get_config_f">获取配置失败</string>
     <string name="flip_s">翻转成功</string>
@@ -776,4 +776,10 @@
     <string name="Intelligent_level_Height">高</string>
     <string name="Intelligent_level_Middle">中</string>
     <string name="Intelligent_level_Low">低</string>
+    <string name="device_set_timing_sleep">设备自动休眠时间</string>
+    <string name="Timing_Sleep">休眠管理</string>
+    <string name="Open_Timing_Sleep">开启休眠</string>
+    <string name="Timing_Sleep_Repeat">重复方式</string>
+    <string name="Sleep_Time">休眠定时</string>
+    <string name="Open_Timing_Sleep_Tips">打开后，无法观看设备预览画面，设备无法录像</string>
 </resources>

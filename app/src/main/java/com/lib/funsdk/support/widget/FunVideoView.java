@@ -742,6 +742,10 @@ public class FunVideoView extends LinearLayout implements IFunSDKResult {
 				
 			}
 			break;
+		case EUIMSG.STOP_PLAY:
+			break;
+		case EUIMSG.PAUSE_PLAY:
+			break;
 		case EUIMSG.SEEK_TO_TIME:
 			{
 				FunLog.i(TAG, "EUIMSG.SEEK_TO_TIME");
@@ -854,26 +858,6 @@ public class FunVideoView extends LinearLayout implements IFunSDKResult {
 				if (mOnYUVDataListener != null) {
 					mOnYUVDataListener.onYUVData(msgContent.pData,msg.arg2,msgContent.arg3);
 				}
-//				FunLog.i(TAG, "__frame_count = " + __frame_count);
-//				if ( null != msgContent.pData && __frame_count ++ == 100 ) {
-//					try {
-//						String path = FunPath.getCapturePath() + ".yuv";
-//						FunLog.i(TAG, "write yuv file : " + path);
-//						File file = new File(path);
-//						if ( !file.exists() ) {
-//							file.createNewFile();
-//						}
-//
-//						FileOutputStream fos = new FileOutputStream(file);
-//						fos.write(msgContent.pData);
-//						fos.flush();
-//						fos.close();
-//						file = null;
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//						FunLog.e(TAG, "write yuv file error");
-//					}
-//				}
 			}
 			break;
         default:

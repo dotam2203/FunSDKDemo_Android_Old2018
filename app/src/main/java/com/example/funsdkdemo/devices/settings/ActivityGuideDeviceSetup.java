@@ -101,6 +101,7 @@ public class ActivityGuideDeviceSetup extends ActivityGuide {
 
 		//一键遮蔽
 		mGuideModules.add(new DemoModule(-1,R.string.One_Key_Mask_Video,-1,ActivityOneKeyMaskVideo.class));
+
 	}
 
 	@Override

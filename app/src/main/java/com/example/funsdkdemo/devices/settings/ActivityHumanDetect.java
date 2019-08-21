@@ -25,14 +25,11 @@ import com.xm.ui.widget.ListSelectItem;
 import com.xm.ui.widget.XTitleBar;
 
 /**
- * @author Administrator
+ * @author hws
  * @name FunSDKDemo_Android_Old2018
  * @class name：com.example.funsdkdemo.devices.settings
  * @class 人形检测
  * @time 2019-07-03 17:03
- * @change
- * @chang time
- * @class describe
  */
 public class ActivityHumanDetect extends ActivityDemo implements IFunSDKResult{
     private ListSelectItem lsiHumanDetect;

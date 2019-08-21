@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.basic.G;
@@ -22,7 +24,9 @@ import com.lib.sdk.bean.HandleConfigData;
 import com.lib.sdk.bean.JsonConfig;
 import com.lib.sdk.bean.StringUtils;
 import com.lib.sdk.bean.SystemFunctionBean;
+import com.lib.sdk.bean.SystemManageShutDown;
 import com.lib.sdk.bean.doorlock.OPDoorLockProCmd;
+import com.xm.ui.widget.SpinnerSelectItem;
 
 /**
  * @author hws
@@ -35,6 +39,11 @@ public class ActivityGuideDeviceDoorLock extends ActivityDemo
         implements IFunSDKResult,AdapterView.OnItemLongClickListener,AdapterView.OnItemClickListener{
     private FunDevice funDevice;
     private int userId;
+    private SpinnerSelectItem ssiSleepTime;
+    private Spinner sleepTimeSpinner;
+    private boolean isSpinnerTouched = false;
+    private SystemManageShutDown sysManageShutDown;
+    private String[] sleepArray = new String[]{"15s", "30s"};
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +59,13 @@ public class ActivityGuideDeviceDoorLock extends ActivityDemo
                 finish();
             }
         });
+
+        ssiSleepTime = findViewById(R.id.ssi_shutdown_time);
+        sleepTimeSpinner = ssiSleepTime.getSpinner();
+
+        initSpinnerText(sleepTimeSpinner, sleepArray, new int[]{15, 30});
+        sleepTimeSpinner.setOnItemSelectedListener(onSpinnerSelected);
+        sleepTimeSpinner.setOnTouchListener(onSpinnerTouched);
     }
 
     private void initData() {
@@ -61,6 +77,14 @@ public class ActivityGuideDeviceDoorLock extends ActivityDemo
         int devPos = intent.getIntExtra("FUN_DEVICE_ID", 0);
         funDevice = FunSupport.getInstance().findDeviceById(devPos);
         userId = FunSDK.GetId(userId,this);
+
+        FunSDK.DevGetConfigByJson(userId,
+                funDevice.getDevSn(),
+                JsonConfig.SYSTEM_MANAGE_SHUTDOWN,
+                1024,
+                -1,
+                5000,
+                0);
     }
 
     @Override
@@ -114,6 +138,18 @@ public class ActivityGuideDeviceDoorLock extends ActivityDemo
                     }else {
                         Toast.makeText(this, getString(R.string.get_config_f) + ":" + message.arg1, Toast.LENGTH_SHORT).show();
                     }
+                }else if (StringUtils.contrast(msgContent.str,JsonConfig.SYSTEM_MANAGE_SHUTDOWN)) {
+                    if (message.arg1 >= 0) {
+                        HandleConfigData handleConfigData = new HandleConfigData();
+                        if (handleConfigData.getDataObj(G.ToString(msgContent.pData), SystemManageShutDown.class)) {
+                            sysManageShutDown = (SystemManageShutDown) handleConfigData.getObj();
+                            if (sysManageShutDown != null) {
+                                setValue(sleepTimeSpinner, sysManageShutDown.ShutDownMode);
+                            }
+                        }
+                    }else {
+                        Toast.makeText(this, getString(R.string.get_config_f) + ":" + message.arg1, Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
             case EUIMSG.DEV_SET_JSON:
@@ -122,6 +158,12 @@ public class ActivityGuideDeviceDoorLock extends ActivityDemo
                         Toast.makeText(this, getString(R.string.flip_s) + ":" + message.arg1, Toast.LENGTH_SHORT).show();
                     }else {
                         Toast.makeText(this, getString(R.string.flip_f) + ":" + message.arg1, Toast.LENGTH_SHORT).show();
+                    }
+                }else if (StringUtils.contrast(msgContent.str,JsonConfig.SYSTEM_MANAGE_SHUTDOWN)) {
+                    if (message.arg1 >= 0) {
+                        Toast.makeText(this, getString(R.string.set_config_s) + ":" + message.arg1, Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(this, getString(R.string.set_config_f) + ":" + message.arg1, Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -151,4 +193,37 @@ public class ActivityGuideDeviceDoorLock extends ActivityDemo
         FunSDK.DevGetConfigByJson(userId, funDevice.getDevSn(),
                 JsonConfig.SYSTEM_FUNCTION, 8192, 0, 5000, 0);
     }
+
+    private AdapterView.OnItemSelectedListener onSpinnerSelected = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if(isSpinnerTouched && sysManageShutDown != null){
+                int sleepTime = getIntValue(sleepTimeSpinner);
+                sysManageShutDown.ShutDownMode = sleepTime;
+                String jsonData = HandleConfigData.getSendData(HandleConfigData.getFullName(JsonConfig.SYSTEM_MANAGE_SHUTDOWN,-1),"0x08",sysManageShutDown);
+                FunSDK.DevSetConfigByJson(userId,
+                        funDevice.getDevSn(),
+                        JsonConfig.SYSTEM_MANAGE_SHUTDOWN,
+                        jsonData,
+                        -1,
+                        5000,
+                        0);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+
+    private View.OnTouchListener onSpinnerTouched = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                isSpinnerTouched = true;
+            }
+            return false;
+        }
+    };
 }

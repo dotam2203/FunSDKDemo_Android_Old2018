@@ -766,4 +766,10 @@
     <string name="Intelligent_level_Height">Hight</string>
     <string name="Intelligent_level_Middle">Middle</string>
     <string name="Intelligent_level_Low">Low</string>
+    <string name="device_set_timing_sleep">Auto Sleep Time</string>
+    <string name="Timing_Sleep">Timing Sleep</string>
+    <string name="Open_Timing_Sleep">Open Timing Sleep</string>
+    <string name="Timing_Sleep_Repeat">Repeat</string>
+    <string name="Sleep_Time">Sleep Time</string>
+    <string name="Open_Timing_Sleep_Tips">The device preview screen cannot be viewed after opening. The device cannot be videotaped.</string>
 </resources>

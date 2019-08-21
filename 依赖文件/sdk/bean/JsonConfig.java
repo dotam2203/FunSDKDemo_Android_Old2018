@@ -178,4 +178,7 @@ public class JsonConfig {
 	public static final String CFG_BROWSER_LANGUAGE = "BrowserLanguage";//设置报警声音的语言
     public static final String DETECT_HUMAN_DETECTION = "Detect.HumanDetection";//人形检测
     public static final String HUMAN_RULE_LIMIT = "HumanRuleLimit";//IPC 人形检测规则能力集
+    public static final String CFG_ONE_KEY_MASK_VIDEO = "General.OneKeyMaskVideo";//一键遮蔽
+    public static final String CFG_TIMING_SLEEP = "General.TimingSleep";//自动休眠
+    public static final String CFG_CHARGE_NO_SHUT_DOWN = "Consumer.ChargeNoShutdown";//充电时休眠
 }

@@ -17,6 +17,7 @@ import com.basic.G;
 import com.example.funsdkdemo.ListAdapterFunDevice.OnFunDeviceItemClickListener;
 import com.example.funsdkdemo.devices.ActivityGuideDeviceTransCom;
 import com.example.funsdkdemo.devices.lowpower.LowPowerDevActivity;
+import com.example.funsdkdemo.test.TestActivity;
 import com.lib.MsgContent;
 import com.lib.funsdk.support.FunSupport;
 import com.lib.funsdk.support.OnAddSubDeviceResultListener;
@@ -320,6 +321,13 @@ public class ActivityGuideDeviceListAP extends ActivityDemo implements OnClickLi
 	@Override
 	public void onFunDeviceCloud(FunDevice funDevice) {
 
+	}
+
+	@Override
+	public void onFunDeviceTest(FunDevice funDevice) {
+		Intent intent = new Intent(this, TestActivity.class);
+		intent.putExtra("devId",funDevice.getDevSn());
+		startActivity(intent);
 	}
 
 

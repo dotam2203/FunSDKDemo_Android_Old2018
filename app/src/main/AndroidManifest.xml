@@ -404,6 +404,8 @@
         <activity android:name=".devices.settings.alarm.ActivityWeekSelect" />
         <activity android:name=".devices.settings.ActivityHumanDetect" />
         <activity android:name=".devices.settings.ActivityOneKeyMaskVideo" />
+        <activity android:name=".test.TestActivity" />
+        <activity android:name=".devices.settings.timingsleep.view.TimingSleepActivity" />
 
 
         <service android:name="com.example.funsdkdemo.alarm.ServiceGuidePushAlarmNotification">
