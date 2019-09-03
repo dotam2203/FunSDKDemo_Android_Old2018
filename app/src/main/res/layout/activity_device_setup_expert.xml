@@ -86,7 +86,6 @@
                 android:background="@color/demo_desc" />
 
             <RelativeLayout
-                android:id="@+id/layoutSetupExposureTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/setup_sub_layout" >
@@ -176,7 +175,6 @@
                     android:background="@drawable/spinner_ab_activated_holo_dark" />
                 
                 <TextView
-                    android:id="@+id/setupRecordModeTip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/titleSetupDefogging"

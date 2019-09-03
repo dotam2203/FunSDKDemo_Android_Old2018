@@ -772,4 +772,22 @@
     <string name="Timing_Sleep_Repeat">Repeat</string>
     <string name="Sleep_Time">Sleep Time</string>
     <string name="Open_Timing_Sleep_Tips">The device preview screen cannot be viewed after opening. The device cannot be videotaped.</string>
+    <string name="device_setup_systeminfo_devupdate">获取设备硬件版本失败！！！</string>
+    <string name="device_setup_radio_byjson">GetConfigByJson</string>
+    <string name="device_setup_radio_bycmd">DevCmdGeneral</string>
+    <string name="change_status">改变状态</string>
+    <string name="flip_s">翻转成功</string>
+    <string name="flip_f">翻转失败</string>
+    <string name="preset">预置点</string>
+    <string name="request_data_error">获取数据失败</string>
+    <string-array name="other_config_function">
+        <item>徘徊检测录像时长</item>
+        <item>录像本地存储</item>
+        <item>消息推送间隔</item>
+        <item>设备呼吸灯</item>
+        <item>拍照优先</item>
+        <item>强制关机</item>
+        <item>徘徊检测报警</item>
+        <item>免打扰相关配置</item>
+    </string-array>
 </resources>

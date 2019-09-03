@@ -9,6 +9,7 @@ import com.example.funsdkdemo.DemoModule;
 import com.example.funsdkdemo.R;
 import com.example.funsdkdemo.devices.settings.alarm.ActivityGuideDeviceSetupAlarm;
 import com.example.funsdkdemo.devices.settings.alarm.ActivityGuideDeviceSetupAlarmCenter;
+import com.example.funsdkdemo.devices.settings.other.ActivityDeviceOtherConfigGet;
 import com.example.funsdkdemo.devices.tour.view.TourActivity;
 import com.lib.funsdk.support.FunSupport;
 import com.lib.funsdk.support.config.SystemInfo;
@@ -101,6 +102,9 @@ public class ActivityGuideDeviceSetup extends ActivityGuide {
 
 		//一键遮蔽
 		mGuideModules.add(new DemoModule(-1,R.string.One_Key_Mask_Video,-1,ActivityOneKeyMaskVideo.class));
+
+		//其他配置
+		mGuideModules.add(new DemoModule(-1,R.string.other_config,-1,ActivityDeviceOtherConfigGet.class));
 
 	}
 

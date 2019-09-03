@@ -782,4 +782,43 @@
     <string name="Timing_Sleep_Repeat">重复方式</string>
     <string name="Sleep_Time">休眠定时</string>
     <string name="Open_Timing_Sleep_Tips">打开后，无法观看设备预览画面，设备无法录像</string>
+    <string name="common_correct">Correct</string>
+    <string name="device_opt_433">433 add</string>
+    <string name="device_opt_433_setting">433 control</string>
+    <string name="device_opt_wake_up">Wake Up</string>
+    <string name="device_net_connect_type_rps">RPS</string>
+    <string name="device_setup_hint_devupdate">Device Update Check</string>
+    <string name="device_setup_frontctr">Front Panel Operate</string>
+    <string name="device_setup_devcheckupdate_failed">Get Device Hard Version Failed!!!</string>
+    <string-array name="bulb_white_level_inelligent">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string name="setup_btn_left">Left</string>
+    <string name="setup_btn_right">Right</string>
+    <string name="setup_btn_up">Up</string>
+    <string name="setup_btn_down">Down</string>
+    <string name="setup_btn_menu">Menu</string>
+    <string name="setup_btn_esc">Esc</string>
+    <string name="add_device_s">Add device success</string>
+    <string name="add_device_f">Add device failed</string>
+    <string name="select_set_function">选择配置</string>
+    <string name="get_config">获取</string>
+    <string name="set_config">设置</string>
+    <string name="show_receive_config">显示接收数据</string>
+    <string name="show_send_config">显示发送数据</string>
+    <string name="other_config">其他配置</string>
+    <string-array name="other_config_function">
+        <item>徘徊检测录像时长</item>
+        <item>录像本地存储</item>
+        <item>消息推送间隔</item>
+        <item>设备呼吸灯</item>
+        <item>拍照优先</item>
+        <item>强制关机</item>
+        <item>徘徊检测报警</item>
+        <item>免打扰相关配置</item>
+    </string-array>
 </resources>

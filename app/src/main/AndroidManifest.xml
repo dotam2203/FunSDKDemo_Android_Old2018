@@ -406,6 +406,7 @@
         <activity android:name=".devices.settings.ActivityOneKeyMaskVideo" />
         <activity android:name=".test.TestActivity" />
         <activity android:name=".devices.settings.timingsleep.view.TimingSleepActivity" />
+        <activity android:name=".devices.settings.other.ActivityDeviceOtherConfigGet" />
 
 
         <service android:name="com.example.funsdkdemo.alarm.ServiceGuidePushAlarmNotification">
