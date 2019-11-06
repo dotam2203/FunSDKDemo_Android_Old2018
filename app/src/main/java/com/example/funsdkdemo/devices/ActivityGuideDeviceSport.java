@@ -960,7 +960,7 @@ public class ActivityGuideDeviceSport
 	 */
 	private void startTalkByHalfDuplex() {
 		if (mTalkManager != null && mHandler != null && mFunVideoView != null) {
-			mTalkManager.startTalkByHalfDuplex();
+//			mTalkManager.startTalkByHalfDuplex();
 		}
 	}
 
@@ -969,7 +969,7 @@ public class ActivityGuideDeviceSport
 	 */
 	private void stopTalkByHalfDuplex() {
 		if (mTalkManager != null && mHandler != null && mFunVideoView != null) {
-			mTalkManager.stopTalkByHalfDuplex();
+//			mTalkManager.stopTalkByHalfDuplex();
 		}
 	}
 
@@ -978,7 +978,7 @@ public class ActivityGuideDeviceSport
 	 */
 	private void startTalkByDoubleDirection() {
 		if (mTalkManager != null && mHandler != null && mFunVideoView != null) {
-			mTalkManager.startTalkByDoubleDirection();
+//			mTalkManager.startTalkByDoubleDirection();
 		}
 	}
 
@@ -987,7 +987,7 @@ public class ActivityGuideDeviceSport
 	 */
 	private void stopTalkByDoubleDirection() {
 		if (mTalkManager != null && mHandler != null && mFunVideoView != null) {
-			mTalkManager.stopTalkByDoubleDirection();
+//			mTalkManager.stopTalkByDoubleDirection();
 		}
 	}
 
