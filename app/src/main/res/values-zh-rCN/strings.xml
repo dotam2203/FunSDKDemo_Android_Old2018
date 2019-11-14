@@ -821,4 +821,8 @@
         <item>徘徊检测报警</item>
         <item>免打扰相关配置</item>
     </string-array>
+    <string name="broadcast">广播</string>
+    <string name="Equipment_intercom">设备对讲</string>
+    <string name="Intercom_type">对讲类型</string>
+    <string name="Front_end_camera_intercom">前端对讲</string>
 </resources>

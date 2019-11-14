@@ -698,7 +698,7 @@
     <string name="Select_wifi">select the WiFi to which the device is connected from the list below</string>
     <string name="save">Save</string>
     <string name="password">password</string>
-    <string name="Frequency_support">Sorry, don't support the WiFi 5.8GHz, please use the WiFi 2.4GHz</string>
+    <string name="Frequency_support">Sorry, don\'t support the WiFi 5.8GHz, please use the WiFi 2.4GHz</string>
     <string name="Enter_link_wifi">enter the WiFi to connect to</string>
     <string name="Select_switch_model">please select mode</string>
     <string name="Current_link_model_ap">current AP mode</string>
@@ -826,6 +826,12 @@
     <string name="smart_analyze_book_room">书屋</string>
     <string name="quit_alert_area">退出警戒区域</string>
     <string name="double_direction_alert">双向警戒</string>
+    <string name="select_set_function">选择配置</string>
+    <string name="get_config">获取</string>
+    <string name="set_config">设置</string>
+    <string name="show_receive_config">显示接收数据</string>
+    <string name="show_send_config">显示发送数据</string>
+    <string name="other_config">其他配置</string>
     <string-array name="other_config_function">
         <item>徘徊检测录像时长</item>
         <item>录像本地存储</item>
@@ -836,4 +842,8 @@
         <item>徘徊检测报警</item>
         <item>免打扰相关配置</item>
     </string-array>
+    <string name="broadcast">Broadcast</string>
+    <string name="Equipment_intercom">Equipment intercom</string>
+    <string name="Intercom_type">Intercom Type</string>
+    <string name="Front_end_camera_intercom">Front-end camera intercom</string>
 </resources>

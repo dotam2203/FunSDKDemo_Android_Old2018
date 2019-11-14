@@ -57,6 +57,7 @@ import com.lib.funsdk.support.FunLog;
 import com.lib.funsdk.support.FunPath;
 import com.lib.funsdk.support.FunSupport;
 import com.lib.funsdk.support.OnFunDeviceOptListener;
+import com.lib.funsdk.support.config.ChannelSystemFunction;
 import com.lib.funsdk.support.config.OPPTZControl;
 import com.lib.funsdk.support.config.OPPTZPreset;
 import com.lib.funsdk.support.config.SystemInfo;
@@ -126,6 +127,8 @@ public class ActivityGuideDeviceCamera
 	private ImageButton mPtz_left = null;
 	private ImageButton mPtz_right = null;
 
+	private RelativeLayout mRlIntercomType;
+
 	private TextView mTextVideoStat = null;
 	private AlertDialog alert = null;
 	private AlertDialog.Builder builder = null;
@@ -150,6 +153,9 @@ public class ActivityGuideDeviceCamera
 	public String NativeLoginPsw; //本地密码
 	private boolean mIsDoubleTalkPress;
 	private TourActivity mTourFragment;
+	private boolean mIsIPCIntercom;//是否是前端对讲
+	private int mIntercomChannel;//对讲通道
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -250,6 +256,13 @@ public class ActivityGuideDeviceCamera
 		mBtnSetup = (ImageButton) findViewById(R.id.btnSettings);
 		mBtnSetup.setOnClickListener(this);
 
+		mRlIntercomType = findViewById(R.id.rl_intercom_type);
+		mRlIntercomType.setOnClickListener(this);
+		findViewById(R.id.tv_dev_intercom).setOnClickListener(this);
+		findViewById(R.id.tv_ipc_intercom).setOnClickListener(this);
+		findViewById(R.id.tv_broadcast).setOnClickListener(this);
+		findViewById(R.id.tv_cancel_intercom).setOnClickListener(this);
+
 		// 注册设备操作回调
 		FunSupport.getInstance().registerOnFunDeviceOptListener(this);
 
@@ -295,6 +308,7 @@ public class ActivityGuideDeviceCamera
 			loginDevice();
 		} else {
 			requestSystemInfo();
+			requestChannelSystemFunction();
 		}
 	}
 
@@ -417,7 +431,14 @@ public class ActivityGuideDeviceCamera
 			break;
             case R.id.Btn_Talk_Switch:
             {
-                openVoiceChannel();
+				ChannelSystemFunction channelSystemFunction = (ChannelSystemFunction) mFunDevice.getConfig(ChannelSystemFunction.CONFIG_NAME);
+				//多通道时，需要获取相应通道的值进行判断
+				boolean supportIPCTalk = channelSystemFunction != null && channelSystemFunction.getSupportIPCTalk()[mFunDevice.CurrChannel] == 1;
+				if (supportIPCTalk) {
+					mRlIntercomType.setVisibility(View.VISIBLE);
+				} else {
+					openVoiceChannel();
+				}
             }
             break;
 			case R.id.cb_double_talk_switch://双向对讲开关
@@ -546,6 +567,29 @@ public class ActivityGuideDeviceCamera
 				showFishEyeInfo();
 			}
 			break;
+			case R.id.rl_intercom_type:
+			case R.id.tv_cancel_intercom://取消对讲
+				mIsIPCIntercom = false;
+				mRlIntercomType.setVisibility(View.GONE);
+				break;
+			case R.id.tv_dev_intercom://设备对讲
+				mIsIPCIntercom = false;
+				mIntercomChannel = 0;
+				mRlIntercomType.setVisibility(View.GONE);
+				openVoiceChannel();
+				break;
+			case R.id.tv_ipc_intercom://前端对讲
+				mIsIPCIntercom = true;
+				mIntercomChannel = mFunDevice.CurrChannel;
+				mRlIntercomType.setVisibility(View.GONE);
+				openVoiceChannel();
+				break;
+			case R.id.tv_broadcast://广播
+				mIsIPCIntercom = true;
+				mIntercomChannel = -1;
+				mRlIntercomType.setVisibility(View.GONE);
+				openVoiceChannel();
+				break;
         default:
             break;
 		}
@@ -821,6 +865,12 @@ public class ActivityGuideDeviceCamera
 		FunSupport.getInstance().requestDeviceConfig(mFunDevice, OPPTZPreset.CONFIG_NAME, 0);
 	}
 
+	//请求系统通道能力级
+	private void requestChannelSystemFunction() {
+		ChannelSystemFunction channelSystemFunction = new ChannelSystemFunction();
+		FunSupport.getInstance().requestDeviceCmdGeneral(mFunDevice, channelSystemFunction);
+	}
+
 	private void startPictureList() {
 		Intent intent = new Intent();
 		intent.putExtra("FUN_DEVICE_ID", mFunDevice.getId());
@@ -1006,7 +1056,7 @@ public class ActivityGuideDeviceCamera
 	 */
 	private void startTalkByHalfDuplex() {
 		if (mTalkManager != null && mHandler != null && mFunVideoView != null) {
-			mTalkManager.startTalkByHalfDuplex();
+			mTalkManager.startTalkByHalfDuplex(mIsIPCIntercom, mIntercomChannel);
 		}
 	}
 
@@ -1024,7 +1074,7 @@ public class ActivityGuideDeviceCamera
 	 */
 	private void startTalkByDoubleDirection() {
 		if (mTalkManager != null && mHandler != null && mFunVideoView != null) {
-			mTalkManager.startTalkByDoubleDirection();
+			mTalkManager.startTalkByDoubleDirection(mIsIPCIntercom, mIntercomChannel);
 		}
 	}
 
@@ -1047,15 +1097,14 @@ public class ActivityGuideDeviceCamera
 	}
 
     private void openVoiceChannel(){
-
-        if (mBtnVoice.getVisibility() == View.VISIBLE) {
-            TranslateAnimation ani = new TranslateAnimation(0, 0, UIFactory.dip2px(this, 100), 0);
-            ani.setDuration(200);
-            mBtnVoiceTalk.setAnimation(ani);
-            mBtnVoiceTalk.setVisibility(View.VISIBLE);
-            mBtnVoice.setVisibility(View.GONE);
-            mFunVideoView.setMediaSound(false);			//关闭本地音频
-        }
+		if (mBtnVoice.getVisibility() == View.VISIBLE) {
+			TranslateAnimation ani = new TranslateAnimation(0, 0, UIFactory.dip2px(this, 100), 0);
+			ani.setDuration(200);
+			mBtnVoiceTalk.setAnimation(ani);
+			mBtnVoiceTalk.setVisibility(View.VISIBLE);
+			mBtnVoice.setVisibility(View.GONE);
+			mFunVideoView.setMediaSound(false);            //关闭本地音频
+		}
     }
 
     private void closeVoiceChannel(int delayTime){
@@ -1137,6 +1186,8 @@ public class ActivityGuideDeviceCamera
 				// 登录成功后立刻获取SystemInfo
 				// 如果不需要获取SystemInfo,在这里播放视频也可以:playRealMedia();
 				requestSystemInfo();
+				//请求系统通道能力级
+				requestChannelSystemFunction();
 			}
 		}
 	}
@@ -1167,6 +1218,7 @@ public class ActivityGuideDeviceCamera
 			if (funDevice.channel == null) {
 				FunSupport.getInstance().requestGetDevChnName(funDevice);
 				requestSystemInfo();
+				requestChannelSystemFunction();
 				return;
 			}
 			channelCount = funDevice.channel.nChnCount;
@@ -1207,6 +1259,8 @@ public class ActivityGuideDeviceCamera
 
 			// 重新获取预置点列表
 //			requestPTZPreset();
+		} else if (ChannelSystemFunction.CONFIG_NAME.equals(configName)) {
+
 		}
 	}
 

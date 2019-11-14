@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:longClickable="true">
 
@@ -302,5 +303,82 @@
                 android:background="@drawable/ptzup_selector" />
         </RelativeLayout>
     </LinearLayout>
+
+    <!-- NVR 对讲方式 -->
+    <RelativeLayout
+        android:id="@+id/rl_intercom_type"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/cover_gray"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:text="@string/Intercom_type"
+                android:textColor="@color/theme"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/theme" />
+
+            <TextView
+                android:id="@+id/tv_dev_intercom"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:text="@string/Equipment_intercom"
+                android:textSize="16sp" />
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/tv_ipc_intercom"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:text="@string/Front_end_camera_intercom"
+                android:textSize="16sp" />
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/tv_broadcast"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:text="@string/broadcast"
+                android:textSize="16sp" />
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/tv_cancel_intercom"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:text="@string/common_cancel"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>

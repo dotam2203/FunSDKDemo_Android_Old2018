@@ -71,6 +71,8 @@ public class DeviceGetJson {
 		DeviceJsonClassMap.put(CameraFishEye.CONFIG_NAME, CameraFishEye.class);
 		DeviceJsonClassMap.put(FishEyePlatform.CONFIG_NAME, FishEyePlatform.class);
         DeviceJsonClassMap.put(CameraWhiteLight.CONFIGNAME, CameraWhiteLight.class);
+
+        DeviceJsonClassMap.put(ChannelSystemFunction.CONFIG_NAME, ChannelSystemFunction.class);
 	}
 	
 	public static BaseConfig buildConfig(String configName) {

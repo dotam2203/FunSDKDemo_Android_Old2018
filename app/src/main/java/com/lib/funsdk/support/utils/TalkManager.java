@@ -22,7 +22,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 /*********************************************************************************
  * 对讲流程：双向对讲
- * 1.创建对讲句柄以及和设备建立连接 {@link #createTalkHandle()}
+ * 1.创建对讲句柄以及和设备建立连接 {@link #createTalkHandle(boolean isIPCIntercom, int chn)}
  * 2.创建向设备发送数据的线程   {@link #createThreadAndStart()}
  * 3.向设备发送可以上传语音数据有给手机的命令    {@link #makeDeviceUploadData()}
  * 4.收到③成功的回调后设置声音为100
@@ -50,6 +50,8 @@ public class TalkManager implements IFunSDKResult {
     public static final int OPEN_UPLOAD_VOICE_DATA = 1;
     public static final int CLOSE_UPLOAD_VOICE_DATA = -1;
     private ThreadPoolExecutor mThreadPoolExecutor;
+    private boolean mIsIPCIntercom;//是否为前端对讲
+    private int mChannel = 0;
 
     public TalkManager(String devId, OnTalkButtonListener ls) {
         this.mDevId = devId;
@@ -154,9 +156,9 @@ public class TalkManager implements IFunSDKResult {
     /****
      * 半双工对讲开始
      */
-    public void startTalkByHalfDuplex() {
+    public void startTalkByHalfDuplex(boolean isIPCIntercom, int chn) {
         mTalkBackMode = this.HALF_DUPLEX;
-        createTalkHandle();
+        createTalkHandle(isIPCIntercom, chn);
         createThreadAndStart();
         FunSDK.MediaSetSound(hTalkHandle, 0, 0);
         if (canSendTalkDataToDevice) {
@@ -178,9 +180,9 @@ public class TalkManager implements IFunSDKResult {
     /****
      * 开启对讲双向形式
      */
-    public void startTalkByDoubleDirection() {
+    public void startTalkByDoubleDirection(boolean isIPCIntercom, int chn) {
         mTalkBackMode = this.FULL_DUPLEX;
-        createTalkHandle();
+        createTalkHandle(isIPCIntercom, chn);
         createThreadAndStart();
     }
 
@@ -197,9 +199,9 @@ public class TalkManager implements IFunSDKResult {
     /****
      * 开启对讲双向形式
      */
-    public void startTalkByDoubleDirection(boolean uploadTalk) {
+    public void startTalkByDoubleDirection(boolean uploadTalk, boolean isIPCIntercom, int chn) {
         mTalkBackMode = this.FULL_DUPLEX;
-        createTalkHandle();
+        createTalkHandle(isIPCIntercom, chn);
         createThreadAndStart(uploadTalk);
     }
 
@@ -250,9 +252,14 @@ public class TalkManager implements IFunSDKResult {
     /***
      * 创建对讲句柄并启用设备对讲功能
      */
-    private void createTalkHandle() {
+    private void createTalkHandle(boolean isIPCIntercom, int chn) {
+        if (mIsIPCIntercom != isIPCIntercom || mChannel != chn) {
+            mIsIPCIntercom = isIPCIntercom;
+            mChannel = chn;
+            sendStopTalkCommand();
+        }
         if (hTalkHandle == 0) {
-            hTalkHandle = FunSDK.DevStarTalk(mMsgId, mDevId,0,0, 0);
+            hTalkHandle = FunSDK.DevStarTalk(mMsgId, mDevId,mIsIPCIntercom ? 1 : 0, mChannel, 0);
             Log.d(TAG, "创建hTalkHandle");
         } else {
             Log.d(TAG, "hTalkHandle 已经创建过");
