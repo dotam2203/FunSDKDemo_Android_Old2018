@@ -5,7 +5,7 @@ import com.lib.funsdk.support.models.FunDevStatus;
 /**
  * @author hws
  * @name OldFunSdkDemo
- * @class name：com.lib.funsdk.support
+ * @class name：com.com.lib.funsdk.support
  * @class 设备唤醒及状态
  * @time 2019-02-15 19:21
  * @change

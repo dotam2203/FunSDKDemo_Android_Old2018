@@ -179,8 +179,8 @@ public class ActivityGuideDevicesSocketAboutWork extends
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.lib.IFunSDKResult#OnFunSDKResult(android.os.Message,
-	 * com.lib.MsgContent)
+	 * @see com.com.lib.IFunSDKResult#OnFunSDKResult(android.os.Message,
+	 * com.com.lib.MsgContent)
 	 */
 
 	@Override

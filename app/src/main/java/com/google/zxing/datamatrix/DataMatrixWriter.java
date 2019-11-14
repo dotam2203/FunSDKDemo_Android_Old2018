@@ -34,7 +34,7 @@ import java.util.Map;
  * This object renders a Data Matrix code as a BitMatrix 2D array of greyscale values.
  *
  * @author dswitkin@google.com (Daniel Switkin)
- * @author Guillaume Le Biller Added to zxing lib.
+ * @author Guillaume Le Biller Added to zxing com.lib.
  */
 public final class DataMatrixWriter implements Writer {
 

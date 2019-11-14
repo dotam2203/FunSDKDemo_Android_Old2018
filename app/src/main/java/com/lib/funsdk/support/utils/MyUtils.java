@@ -163,11 +163,15 @@ public class MyUtils {
      * @param IP
      * @return
      */
-    public static boolean isIp(String IP){
-        boolean b = false; 
-        IP = IP.trim();
-        if(IP.matches("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}")){ 
-            String s[] = IP.split("\\."); 
+    public static boolean isIp(String ip){
+        boolean b = false;
+        if (ip == null) {
+        	return false;
+		}
+
+		ip = ip.trim();
+        if(ip.matches("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}")){
+            String s[] = ip.split("\\.");
             if(Integer.parseInt(s[0])<255) 
                 if(Integer.parseInt(s[1])<255) 
                     if(Integer.parseInt(s[2])<255) 

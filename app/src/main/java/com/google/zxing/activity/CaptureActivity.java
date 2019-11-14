@@ -221,7 +221,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 		// camera error
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(getString(R.string.app_name));
-		builder.setMessage(FunSDK.TS("camera_error"));
+		builder.setMessage(R.string.camera_error);
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
 			@Override
@@ -314,7 +314,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 				mFlash.setBackgroundResource(R.drawable.flash_open);
 				flag = true;
 			} else {
-				Toast.makeText(CaptureActivity.this, FunSDK.TS("No_flash"), Toast.LENGTH_SHORT).show();
+				Toast.makeText(CaptureActivity.this, R.string.No_flash, Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

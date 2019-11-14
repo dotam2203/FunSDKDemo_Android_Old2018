@@ -16,10 +16,11 @@ import com.lib.MsgContent;
 import com.lib.SDKCONST;
 import com.lib.funsdk.support.config.TimimgPtzTourBean;
 import com.lib.funsdk.support.models.FunDevice;
-import com.lib.sdk.bean.DetectTrackBean;
-import com.lib.sdk.bean.OPPTZControlBean;
 
 import java.util.List;
+
+import com.lib.sdk.bean.DetectTrackBean;
+import com.lib.sdk.bean.OPPTZControlBean;
 
 import static com.lib.sdk.bean.OPPTZControlBean.SET_PRESET;
 
@@ -132,7 +133,7 @@ public class TourPresenter implements TourContract.ITourPresenter{
         tourView.showLoading(true, "");
 
         //1、删除对应预置点（该步可省略）
-        dataSource.controlPreset(com.lib.sdk.bean.OPPTZControlBean.REMOVE_PRESET, 0, presetId, new SimpleTourCallback() {
+        dataSource.controlPreset(OPPTZControlBean.REMOVE_PRESET, 0, presetId, new SimpleTourCallback() {
             @Override
             public void onSuccess(@Nullable Object o) {
                 //2、移除巡航线上对应的点

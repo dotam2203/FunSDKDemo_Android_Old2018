@@ -311,6 +311,7 @@ public class ActivityGuideDeviceAlarmResult extends ActivityDemo implements OnCl
 			AlarmInfo alarmInfo = mAdapter.getAlarmInfo(position);
 			if ( null != alarmInfo ) {
 				String savePicPath = Environment.getExternalStorageDirectory() + File.separator + System.currentTimeMillis() + ".jpg";
+				//通过此方法下载报警图片
 				MpsClient.DownloadAlarmImage(userId
 						,mFunDevice.getDevSn()
 						,savePicPath
@@ -318,14 +319,6 @@ public class ActivityGuideDeviceAlarmResult extends ActivityDemo implements OnCl
 						,0
 						,0
 						,position);
-
-				//目前云存储上的图片没有url地址
-				String picUrl = alarmInfo.getPic();
-				if ( null == picUrl ) {
-					picUrl = "";
-				}
-				showToast(picUrl);
-				Log.i("", "------picurl = " + picUrl);
 			}
 		}
 	}

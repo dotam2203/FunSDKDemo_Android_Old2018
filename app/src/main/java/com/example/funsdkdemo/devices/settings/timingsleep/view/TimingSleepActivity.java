@@ -28,7 +28,7 @@ import java.util.Date;
  */
 
 public class TimingSleepActivity extends AppCompatActivity
-        implements ITimingSleepView ,TimePickBottomDialog.OnDatePickerListener,View.OnClickListener {
+        implements ITimingSleepView , TimePickBottomDialog.OnDatePickerListener,View.OnClickListener {
     public static final int TYPE_START = 0;
     public static final int TYPE_END = 1;
     private TimingSleepPersenter mPersenter;
@@ -211,6 +211,8 @@ public class TimingSleepActivity extends AppCompatActivity
                 singleSelectionDlg.setCurSelectedOption(mIsRepeat ?
                         FunSDK.TS("Repeat") : FunSDK.TS("Only"));
                 singleSelectionDlg.show(getFragmentManager(), "SingleSelection");
+                break;
+            default:
                 break;
         }
     }

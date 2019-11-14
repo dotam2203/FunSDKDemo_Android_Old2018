@@ -61,7 +61,7 @@ public class NetWorkAlarmServer extends BaseConfig{
 	}
 
 	/* (non-Javadoc)
-	 * @see com.lib.funsdk.support.config.BaseConfig#getSendMsg()
+	 * @see com.com.lib.funsdk.support.config.BaseConfig#getSendMsg()
 	 */
 	@Override
 	public String getSendMsg() {

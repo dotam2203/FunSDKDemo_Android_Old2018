@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.lib.MsgContent;
 import com.lib.funsdk.support.config.TimimgPtzTourBean;
+
 import com.lib.sdk.bean.DetectTrackBean;
 
 /**
@@ -93,6 +94,6 @@ public interface TourDataSource {
      * 设置人形跟随开关
      * @param iSwitch
      */
-    void setDetectTrack(DetectTrackBean detectTrackSwitch,TourCallback rspCallback);
+    void setDetectTrack(DetectTrackBean detectTrackSwitch, TourCallback rspCallback);
 
 }

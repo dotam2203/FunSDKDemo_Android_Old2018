@@ -290,7 +290,7 @@ public class ActivityGuideDeviceListAP extends ActivityDemo implements OnClickLi
 
 
 	/* (non-Javadoc)
-	 * @see com.example.funsdkdemo.ListAdapterFunDevice.OnFunDeviceItemClickListener#onFunDevice433Control(com.lib.funsdk.support.models.FunDevice)
+	 * @see com.example.funsdkdemo.ListAdapterFunDevice.OnFunDeviceItemClickListener#onFunDevice433Control(com.com.lib.funsdk.support.models.FunDevice)
 	 */
 	@Override
 	public void onFunDevice433Control(FunDevice funDevice) {
@@ -332,7 +332,7 @@ public class ActivityGuideDeviceListAP extends ActivityDemo implements OnClickLi
 
 
 	/* (non-Javadoc)
-	 * @see com.example.funsdkdemo.ListAdapterFunDevice.OnFunDeviceItemClickListener#onFunDevice433AddSub(com.lib.funsdk.support.models.FunDevice)
+	 * @see com.example.funsdkdemo.ListAdapterFunDevice.OnFunDeviceItemClickListener#onFunDevice433AddSub(com.com.lib.funsdk.support.models.FunDevice)
 	 */
 	@Override
 	public void onFunDevice433AddSub(FunDevice funDevice) {

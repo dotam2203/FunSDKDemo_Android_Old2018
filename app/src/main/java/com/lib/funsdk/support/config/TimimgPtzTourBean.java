@@ -5,7 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 /**
  * @author Administrator
  * @name FunSDKDemo_Android_Old2018
- * @class name：com.lib.funsdk.support.config
+ * @class name：com.com.lib.funsdk.support.config
  * @class describe
  * @time 2019-07-09 16:42
  * @change
