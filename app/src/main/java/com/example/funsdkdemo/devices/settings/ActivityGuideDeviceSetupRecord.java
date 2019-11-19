@@ -1,6 +1,7 @@
 package com.example.funsdkdemo.devices.settings;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -12,28 +13,39 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.basic.G;
 import com.example.common.DeviceConfigType;
 import com.example.funsdkdemo.ActivityDemo;
 import com.example.funsdkdemo.R;
+import com.lib.EUIMSG;
+import com.lib.FunSDK;
+import com.lib.IFunSDKResult;
+import com.lib.JSONCONFIG;
+import com.lib.MsgContent;
 import com.lib.SDKCONST;
 import com.lib.funsdk.support.FunError;
 import com.lib.funsdk.support.FunLog;
 import com.lib.funsdk.support.FunSupport;
 import com.lib.funsdk.support.OnFunDeviceOptListener;
 import com.lib.funsdk.support.config.CloudStorage;
+import com.lib.funsdk.support.config.JsonConfig;
 import com.lib.funsdk.support.config.RecordParam;
 import com.lib.funsdk.support.config.RecordParamEx;
 import com.lib.funsdk.support.config.SimplifyEncode;
+import com.lib.funsdk.support.config.SystemInfo;
 import com.lib.funsdk.support.models.FunDevType;
 import com.lib.funsdk.support.models.FunDevice;
 import com.lib.funsdk.support.utils.MyUtils;
 import com.lib.sdk.struct.H264_DVR_FILE_DATA;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ActivityGuideDeviceSetupRecord extends ActivityDemo implements OnClickListener, OnFunDeviceOptListener, OnItemSelectedListener, OnSeekBarChangeListener {
+public class ActivityGuideDeviceSetupRecord extends ActivityDemo implements OnClickListener, OnFunDeviceOptListener, OnItemSelectedListener, OnSeekBarChangeListener, IFunSDKResult {
 
 	
 	private TextView mTextTitle = null;
@@ -63,7 +75,7 @@ public class ActivityGuideDeviceSetupRecord extends ActivityDemo implements OnCl
 	/**
 	 * 本界面需要获取到的设备配置信息
 	 */
-	private final String[] DEV_CONFIGS_FOR_CAMARA = {
+	private String[] DEV_CONFIGS_FOR_CAMARA = {
 			// 获取参数:SimplifyEncode -> audioEable
 			SimplifyEncode.CONFIG_NAME,
 			
@@ -80,7 +92,7 @@ public class ActivityGuideDeviceSetupRecord extends ActivityDemo implements OnCl
 			// 获取参数:RecordParam
 			RecordParam.CONFIG_NAME,
 	};
-	
+
 	private String[] DEV_CONFIGS = DEV_CONFIGS_FOR_CHANNELS;
 	
 	// 设置配置信息的时候,由于有多个,通过下面的列表来判断是否所有的配置都设置完成了
@@ -145,14 +157,21 @@ public class ActivityGuideDeviceSetupRecord extends ActivityDemo implements OnCl
 			mRecordAudio = (ImageButton)findViewById(R.id.setupRecordAudioBtn);
 			mRecordAudio.setOnClickListener(this);
 			findViewById(R.id.layoutSetupRecordAudio).setVisibility(View.VISIBLE);
-			DEV_CONFIGS = DEV_CONFIGS_FOR_CAMARA;
 		}
 		
 		// 注册设备操作监听
 		FunSupport.getInstance().registerOnFunDeviceOptListener(this);
-		
-		// 获取报警配置信息
-		tryGetRecordConfig();
+
+		SystemInfo info = (SystemInfo) mFunDevice.getConfig(SystemInfo.CONFIG_NAME);
+		if (info != null && info.getVideoInChannel() > mFunDevice.CurrChannel) {
+			// 获取是否支持主辅码流录像
+			int useId = FunSDK.RegUser(this);
+			FunSDK.DevGetConfigByJson(useId, mFunDevice.getDevSn(), JSONCONFIG.SUPPORT_EXTRECORD, 4096, -1, 5000, 0);
+		} else {
+			DEV_CONFIGS = DEV_CONFIGS_FOR_CHANNELS;
+			// 获取报警配置信息
+			tryGetRecordConfig();
+		}
 	}
 	
 
@@ -606,5 +625,55 @@ public class ActivityGuideDeviceSetupRecord extends ActivityDemo implements OnCl
 	public void onDeviceFileListGetFailed(FunDevice funDevice) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int OnFunSDKResult(Message message, MsgContent msgContent) {
+		if (message.what == EUIMSG.DEV_GET_JSON) {
+			if (JsonConfig.SUPPORT_EXTRECORD.equals(msgContent.str)) {
+				if (message.arg1 > 0) {
+					try {
+						JSONObject jsonObject = new JSONObject(G.ToString(msgContent.pData));
+						if (jsonObject.has(JsonConfig.SUPPORT_EXTRECORD)) {
+							JSONObject object = jsonObject.getJSONObject(JsonConfig.SUPPORT_EXTRECORD);
+							if (object.has("AbilityPram")) {
+								String ability = object.getString("AbilityPram");
+								// AbilityPram  0支持主码流录像，1支持辅码流录像，2都支持
+								if ("0".equals(ability) || "0x00000000".equals(ability)) {
+									DEV_CONFIGS_FOR_CAMARA = new String[]{
+											// 获取参数:SimplifyEncode -> audioEable
+											SimplifyEncode.CONFIG_NAME,
+											// 获取参数:RecordParam
+											RecordParam.CONFIG_NAME,
+									};
+								} else if ("1".equals(ability) || "0x00000001".equals(ability)) {
+									DEV_CONFIGS_FOR_CAMARA = new String[] {
+											// 获取参数:SimplifyEncode -> audioEable
+											SimplifyEncode.CONFIG_NAME,
+											RecordParamEx.CONFIG_NAME,
+									};
+								} else if ("2".equals(ability) || "0x00000002".equals(ability)) {
+									DEV_CONFIGS_FOR_CAMARA = new String[] {
+											// 获取参数:SimplifyEncode -> audioEable
+											SimplifyEncode.CONFIG_NAME,
+											// 获取参数:RecordParam
+											RecordParam.CONFIG_NAME,
+											RecordParamEx.CONFIG_NAME,
+									};
+								}
+								DEV_CONFIGS = DEV_CONFIGS_FOR_CAMARA;
+								// 获取报警配置信息
+								tryGetRecordConfig();
+							}
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					showToast(FunError.getErrorStr(message.arg1));
+				}
+			}
+		}
+		return 0;
 	}
 }
