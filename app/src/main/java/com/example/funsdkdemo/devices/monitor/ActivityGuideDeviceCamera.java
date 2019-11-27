@@ -433,8 +433,12 @@ public class ActivityGuideDeviceCamera
             {
 				ChannelSystemFunction channelSystemFunction = (ChannelSystemFunction) mFunDevice.getConfig(ChannelSystemFunction.CONFIG_NAME);
 				//多通道时，需要获取相应通道的值进行判断
-				boolean supportIPCTalk = channelSystemFunction != null && channelSystemFunction.getSupportIPCTalk()[mFunDevice.CurrChannel] == 1;
-				if (supportIPCTalk) {
+				boolean isSupportIPCTalk = false;
+				if (channelSystemFunction  != null && channelSystemFunction.getSupportIPCTalk() != null ) {
+					isSupportIPCTalk = channelSystemFunction.getSupportIPCTalk()[mFunDevice.CurrChannel] == 1;
+				}
+
+				if (isSupportIPCTalk) {
 					mRlIntercomType.setVisibility(View.VISIBLE);
 				} else {
 					openVoiceChannel();
