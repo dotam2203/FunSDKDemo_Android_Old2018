@@ -96,9 +96,10 @@ public class TalkManager implements IFunSDKResult {
                 } else {
                     canSendTalkDataToDevice = true;
                     if (mTalkBackMode == FULL_DUPLEX) {
-                        makeDeviceUploadData();
                         canSendTalkDataToDevice = true;
+                        FunSDK.MediaSetSound(hTalkHandle, 100, 0);//打开语音
                         mTalkBtnLs.OnCreateLinkResult(RESULT_OK);
+                        mTalkBtnLs.OnVoiceOperateResult(OPEN_UPLOAD_VOICE_DATA, RESULT_OK);
                         canSendTalkDataToDevice = true;
                     } else if (mTalkBackMode == HALF_DUPLEX) {
                         deviceStopUploadData();
@@ -157,7 +158,7 @@ public class TalkManager implements IFunSDKResult {
      * 半双工对讲开始
      */
     public void startTalkByHalfDuplex(boolean isIPCIntercom, int chn) {
-        mTalkBackMode = this.HALF_DUPLEX;
+        mTalkBackMode = HALF_DUPLEX;
         createTalkHandle(isIPCIntercom, chn);
         createThreadAndStart();
         FunSDK.MediaSetSound(hTalkHandle, 0, 0);
@@ -200,7 +201,7 @@ public class TalkManager implements IFunSDKResult {
      * 开启对讲双向形式
      */
     public void startTalkByDoubleDirection(boolean uploadTalk, boolean isIPCIntercom, int chn) {
-        mTalkBackMode = this.FULL_DUPLEX;
+        mTalkBackMode = FULL_DUPLEX;
         createTalkHandle(isIPCIntercom, chn);
         createThreadAndStart(uploadTalk);
     }
