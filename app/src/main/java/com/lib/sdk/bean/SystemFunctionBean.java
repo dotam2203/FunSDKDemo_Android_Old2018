@@ -123,6 +123,7 @@ public class SystemFunctionBean {
 		public boolean SupportBallTelescopic;//是否支持电子放大
 		public boolean SupportCorridorMode;//是否支持走廊模式，就是90度旋转
 		public boolean SupportSoftPhotosensitive;//软光敏功能
+		public boolean SupportSysRemoteCtrl;//是否支持远程控制
 	}
 
 	public class PreviewFunction {

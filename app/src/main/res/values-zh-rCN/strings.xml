@@ -825,4 +825,9 @@
     <string name="Equipment_intercom">设备对讲</string>
     <string name="Intercom_type">对讲类型</string>
     <string name="Front_end_camera_intercom">前端对讲</string>
+    <string name="TR_Left_Click">左击</string>
+    <string name="TR_Right_Click">右击</string>
+    <string name="TR_ESC_Click">退出</string>
+    <string name="TR_Open_Remote_Video_F">打开视频失败</string>
+    <string name="TR_Remote_Ctrl">远程控制</string>
 </resources>

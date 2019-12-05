@@ -11,6 +11,7 @@ import com.example.funsdkdemo.devices.settings.alarm.ActivityGuideDeviceSetupAla
 import com.example.funsdkdemo.devices.settings.alarm.ActivityGuideDeviceSetupAlarmCenter;
 import com.example.funsdkdemo.devices.settings.intelligentvigilance.view.IntelligentVigilanceActivity;
 import com.example.funsdkdemo.devices.settings.other.ActivityDeviceOtherConfigGet;
+import com.example.funsdkdemo.devices.settings.remotectrl.view.DevRemoteCtrlActivity;
 import com.example.funsdkdemo.devices.tour.view.TourActivity;
 import com.lib.funsdk.support.FunSupport;
 import com.lib.funsdk.support.config.SystemInfo;
@@ -107,6 +108,8 @@ public class ActivityGuideDeviceSetup extends ActivityGuide {
 		//其他配置
 		mGuideModules.add(new DemoModule(-1,R.string.other_config,-1,ActivityDeviceOtherConfigGet.class));
 
+		//远程控制
+		mGuideModules.add(new DemoModule(-1,R.string.TR_Remote_Ctrl,-1, DevRemoteCtrlActivity.class));
 	}
 
 	@Override

@@ -409,6 +409,7 @@
         <activity android:name=".devices.settings.other.ActivityDeviceOtherConfigGet" />
         <activity android:name=".devices.settings.intelligentvigilance.alert.view.AlertSetActivity" />
         <activity android:name=".devices.settings.intelligentvigilance.view.IntelligentVigilanceActivity" />
+        <activity android:name=".devices.settings.remotectrl.view.DevRemoteCtrlActivity" />
 
 
         <service android:name="com.example.funsdkdemo.alarm.ServiceGuidePushAlarmNotification">

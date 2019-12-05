@@ -846,4 +846,9 @@
     <string name="Equipment_intercom">Equipment intercom</string>
     <string name="Intercom_type">Intercom Type</string>
     <string name="Front_end_camera_intercom">Front-end camera intercom</string>
+    <string name="TR_Left_Click">Left Click</string>
+    <string name="TR_Right_Click">Right Click</string>
+    <string name="TR_ESC_Click">ESC Click</string>
+    <string name="TR_Open_Remote_Video_F">Open remote video failed</string>
+    <string name="TR_Remote_Ctrl">Remote Ctrl</string>
 </resources>
