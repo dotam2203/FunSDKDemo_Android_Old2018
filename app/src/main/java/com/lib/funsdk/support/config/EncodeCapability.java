@@ -16,9 +16,9 @@ public class EncodeCapability extends BaseConfig {
 	public int MaxBitrate; // 支持的总码率大小
 	public int MaxEncodePower; // 总最大编码能力
 	public int ChannelMaxSetSync;	//是否需要同步分辨率
-	public int MaxEncodePowerPerChannel;  //当前通道最大编码能力
-	public int ImageSizePerChannel;			//当前通道图像质量（应该是分辨率能力集）
-	public int ExImageSizePerChannel;		//辅码流的
+	public long MaxEncodePowerPerChannel;  //当前通道最大编码能力
+	public long ImageSizePerChannel;			//当前通道图像质量（应该是分辨率能力集）
+	public long ExImageSizePerChannel;		//辅码流的
 	public JSONArray ExImageSizePerChannelEx;	//确定主码流的情况下，辅码流当前通道分辨率能力集
 
 	public boolean Enable;			//是否支持该编码方式
@@ -45,8 +45,9 @@ public class EncodeCapability extends BaseConfig {
 
 	@Override
 	public boolean onParse(String json, int channel) {		//通过对源xmeye的上下文观察，传进来的应该是通道号
-		if (!super.onParse(json))
+		if (!super.onParse(json)) {
 			return false;
+		}
 		try {
 			mChannel = channel;
 			Object obj = mJsonObj.get(getConfigName());
@@ -120,43 +121,49 @@ public class EncodeCapability extends BaseConfig {
 	}
 
 	private int getValues(String space) {
-		if (encodeInfo_Array == null)
+		if (encodeInfo_Array == null) {
 			return 0;
+		}
 		int value = 0;
 		if (encodeInfo_Obj.has(space)) {
 			String memoryparam = encodeInfo_Obj.optString(space);
 			if (memoryparam != null && memoryparam.length() > 2) {
 				value = Integer.parseInt(memoryparam.substring(2, memoryparam.length()), 16);
-			} else
+			} else {
 				value = encodeInfo_Obj.optInt(space);
+			}
 		}
 		return value;
 	}
 
-	private int getValue(String space, int channel) {
-		if (obj == null)
+	private long getValue(String space, int channel) {
+		if (obj == null) {
 			return 0;
-		int value = 0;
+		}
+		long value = 0;
 		if (obj.has(space)) {
 			String memoryparam = obj.optJSONArray(space).optString(channel);
 			if (memoryparam != null && memoryparam.length() > 2) {
-				value = Integer.parseInt(memoryparam.substring(2, memoryparam.length()), 16);
-			} else
+				value = Long.parseLong(memoryparam.substring(2, memoryparam.length()), 16);
+			} else {
 				value = obj.optInt(space);
+			}
 		}
 		return value;
 	}
 
 	private long getValue(String space) {
-		if (encodeInfo_Array == null)
+		if (encodeInfo_Array == null) {
 			return 0;
+		}
 		long value = 0;
 		if (encodeInfo_Obj.has(space)) {
 			String memoryparam = encodeInfo_Obj.optString(space);
 			if (memoryparam != null && memoryparam.length() > 2) {
 				value = Long.parseLong(memoryparam.substring(2, memoryparam.length()), 16);
-			} else
+			} else {
 				value = encodeInfo_Obj.optInt(space);
+			}
 		}
 		return value;
 	}
