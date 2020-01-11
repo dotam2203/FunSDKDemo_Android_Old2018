@@ -304,12 +304,7 @@ public class ActivityGuideDeviceRecordList extends ActivityDemo
     private void seekRecordVideo(int progress) {
     	if ( null != mVideoView ) {
     		int seekPos = mVideoView.getStartTime()+progress;
-    		if (byFile) {
-				int seekposbyfile = (progress*100)/MaxProgress;
-				mVideoView.seekbyfile(seekposbyfile);
-			}else{
-				mVideoView.seek(seekPos);
-			}
+            mVideoView.seek(seekPos);
     	}
     }
 
