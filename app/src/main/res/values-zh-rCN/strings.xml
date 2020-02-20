@@ -37,10 +37,12 @@
     <string name="guide_module_title_media_capture">3.8 视频抓图</string>
     <string name="guide_module_title_trancode">4. 编码转码</string>
     <string name="guide_module_title_trancode_jpeg2mp4">4.1 JPEG转MP4</string>
+    <string name="guide_module_title_cloud">5. 云服务</string>
     <string name="guide_module_title_about">5. 关于Demo</string>
     <string name="guide_module_desc_user">"用户注册/登录/修改用户信息/密码找回"</string>
     <string name="guide_module_desc_device">"设备管理/设备配置/连接/文件浏览/设备报警"</string>
     <string name="guide_module_desc_media">"播放远程录像/本地录像/抓拍"</string>
+    <string name="guide_module_desc_cloud">"云存储/流量"</string>
     <string name="guide_module_desc_trancode">"JPEG批量生产MP4"</string>
     <string name="guide_module_desc_about">"版本信息"</string>
     <string name="guide_module_media_remote_video">"请先登录设备！！"</string>
@@ -830,4 +832,6 @@
     <string name="TR_ESC_Click">退出</string>
     <string name="TR_Open_Remote_Video_F">打开视频失败</string>
     <string name="TR_Remote_Ctrl">远程控制</string>
+    <string name="open_cloud_server">打开云服务网页</string>
+    <string name="cloud_server">云服务</string>
 </resources>

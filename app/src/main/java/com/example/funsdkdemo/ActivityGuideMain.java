@@ -46,11 +46,11 @@ public class ActivityGuideMain extends ActivityGuide implements OnFunLoginListen
 				ActivityGuideMedia.class));
 		
 		// 4.编码转码
-		mGuideModules.add(new DemoModule(R.drawable.icon_transcode, 
+		mGuideModules.add(new DemoModule(R.drawable.icon_cloud,
 				R.string.guide_module_title_trancode, 
 				R.string.guide_module_desc_trancode, 
 				ActivityGuideTranscode.class));
-		
+
 		// 5.关于
 		mGuideModules.add(new DemoModule(R.drawable.icon_funsdk, 
 				R.string.guide_module_title_about, 

@@ -37,11 +37,13 @@
     <string name="guide_module_title_media_capture">3.8 Video Capture</string>
     <string name="guide_module_title_trancode">4. Transcoding</string>
     <string name="guide_module_title_trancode_jpeg2mp4">4.1 JPEG transcode to MP4</string>
+    <string name="guide_module_title_cloud">5. Cloud Server</string>
     <string name="guide_module_title_about">5. About Demo</string>
     <string name="guide_module_desc_user">"Register/Login/Modify user info/Forgot password"</string>
     <string name="guide_module_desc_device">"Device management/Configure/Connect/Files/Alarm"</string>
     <string name="guide_module_desc_media">"Play remote video/local video/Capture"</string>
     <string name="guide_module_desc_trancode">"JPEG transcode to MP4"</string>
+    <string name="guide_module_desc_cloud">"Cloud Storage/Traffic"</string>
     <string name="guide_module_desc_about">"Version infomation"</string>
     <string name="guide_module_media_remote_video">"Please login device first!!"</string>
     <string name="user_not_login">not login</string>
@@ -851,4 +853,6 @@
     <string name="TR_ESC_Click">ESC Click</string>
     <string name="TR_Open_Remote_Video_F">Open remote video failed</string>
     <string name="TR_Remote_Ctrl">Remote Ctrl</string>
+    <string name="open_cloud_server">Open cloud service webpage</string>
+    <string name="cloud_server">Cloud Server</string>
 </resources>

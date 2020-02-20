@@ -9,14 +9,20 @@
         android:id="@+id/layoutTop"
         layout="@layout/layout_top_navigate_theme" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/open_cloud_server"
+        android:layout_gravity="center"
+        android:onClick="openCloudServer"/>
+
     <include
         android:id="@+id/date_sel_ll"
         layout="@layout/include_date_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        />
+        android:layout_marginTop="10dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rc_cloud_date"

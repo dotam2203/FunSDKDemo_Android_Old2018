@@ -87,7 +87,7 @@ public class FunSupport implements IFunSDKResult {
 
     // 应用证书,请在开放平台注册应用之后替换以下4个字段
     private static final String APP_UUID = "e0534f3240274897821a126be19b6d46";
-    private static final String APP_KEY = "0621ef206a1d4cafbe0c5545c3882ea8";
+    public static final String APP_KEY = "0621ef206a1d4cafbe0c5545c3882ea8";
     private static final String APP_SECRET = "90f8bc17be2a425db6068c749dee4f5d";
     private static final int APP_MOVECARD = 2;
 

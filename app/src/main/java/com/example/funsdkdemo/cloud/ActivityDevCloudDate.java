@@ -189,4 +189,13 @@ public class ActivityDevCloudDate extends ActivityDemo implements View.OnClickLi
             }
         }
     }
+
+    public void openCloudServer(View view) {
+        Intent it = new Intent(ActivityDevCloudDate.this, CloudWebActivity.class);
+        it.putExtra("FUN_DEVICE_ID",funDevice.getId());
+        if (cloudDates != null && !cloudDates.isEmpty()) {
+            it.putExtra("searchDate",cloudDates.get(0).getTime());
+        }
+        startActivity(it);
+    }
 }

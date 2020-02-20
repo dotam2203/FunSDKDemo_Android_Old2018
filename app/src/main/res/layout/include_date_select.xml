@@ -5,11 +5,12 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="horizontal">
+
     <ImageView
         android:id="@+id/pre_date_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_arrow_left"/>
+        android:src="@drawable/ic_arrow_left" />
     <LinearLayout
         android:id="@+id/show_calendar_ll"
         android:layout_width="wrap_content"
