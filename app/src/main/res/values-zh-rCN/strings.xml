@@ -834,4 +834,11 @@
     <string name="TR_Remote_Ctrl">远程控制</string>
     <string name="open_cloud_server">打开云服务网页</string>
     <string name="cloud_server">云服务</string>
+    <string name="pir_set">PIR 徘徊检测</string>
+    <string name="Body_Detect">PIR</string>
+    <string name="Detection_duration">PIR检测时间</string>
+    <string name="PIR_Detect_Time_Period">PIR时间设置</string>
+    <string name="Start_End_Time">起止时间</string>
+    <string name="Repeat">重复</string>
+    <string name="pir_sensitive">PIR灵敏度</string>
 </resources>

@@ -17,6 +17,8 @@ public class AlarmInfoBean {
 
 	}
 
+	//灵敏度
+	public int PirSensitive;
 	public int Level;
 	public boolean Enable;
 	public EventHandler EventHandler = new EventHandler();

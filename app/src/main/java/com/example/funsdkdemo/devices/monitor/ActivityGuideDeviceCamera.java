@@ -109,6 +109,7 @@ public class ActivityGuideDeviceCamera
 	private Button mBtnFishEyeInfo = null;
 	private Button mBtnGetPreset = null;
 	private Button mBtnSetPreset = null;
+	private Button mBtnDevCapture;
 	private View mSplitView = null;
 	private CheckBox mCbDoubleTalk = null;
 	private RelativeLayout mLayoutRecording = null;
@@ -118,7 +119,7 @@ public class ActivityGuideDeviceCamera
 	private RelativeLayout mBtnVoiceTalk = null;
 	private Button mBtnVoice = null;
     private ImageButton mBtnQuitVoice = null;
-	private ImageButton mBtnDevCapture = null;
+	private ImageButton mbtnLookDevCapture = null;
 	private ImageButton mBtnDevRecord = null;
 
 	private RelativeLayout mLayoutDirectionControl = null;
@@ -201,10 +202,11 @@ public class ActivityGuideDeviceCamera
 		mBtnVoiceTalk = (RelativeLayout) findViewById(R.id.btnVoiceTalk);
 		mBtnVoice = (Button) findViewById(R.id.Btn_Talk_Switch);
         mBtnQuitVoice = (ImageButton) findViewById(R.id.btn_quit_voice);
-		mBtnDevCapture = (ImageButton) findViewById(R.id.btnDevCapture);
+		mbtnLookDevCapture = (ImageButton) findViewById(R.id.btnLookDevCapture);
 		mBtnDevRecord = (ImageButton) findViewById(R.id.btnDevRecord);
 		mBtnGetPreset = (Button) findViewById(R.id.btnGetPreset);
 		mBtnSetPreset = (Button) findViewById(R.id.btnSetPreset);
+		mBtnDevCapture = findViewById(R.id.btnDevCapture);
 
 		mSplitView = findViewById(R.id.splitView);
 		mCbDoubleTalk = findViewById(R.id.cb_double_talk_switch);
@@ -218,11 +220,11 @@ public class ActivityGuideDeviceCamera
 		mBtnVoiceTalk.setOnTouchListener(mIntercomTouchLs);
 		mBtnVoice.setOnClickListener(this);
         mBtnQuitVoice.setOnClickListener(this);
-		mBtnDevCapture.setOnClickListener(this);
+		mbtnLookDevCapture.setOnClickListener(this);
 		mBtnDevRecord.setOnClickListener(this);
 		mBtnGetPreset.setOnClickListener(this);
 		mBtnSetPreset.setOnClickListener(this);
-
+		mBtnDevCapture.setOnClickListener(this);
 		mCbDoubleTalk.setOnClickListener(this);
 		mPtz_up.setOnTouchListener(onPtz_up);
 		mPtz_down.setOnTouchListener(onPtz_down);
@@ -451,7 +453,7 @@ public class ActivityGuideDeviceCamera
 				closeVoiceChannel(500);
             }
             break;
-		case R.id.btnDevCapture: // 远程设备图像列表
+		case R.id.btnLookDevCapture: // 远程设备图像列表
 		{
 			startPictureList();
 		}
@@ -593,6 +595,9 @@ public class ActivityGuideDeviceCamera
 				mIntercomChannel = -1;
 				mRlIntercomType.setVisibility(View.GONE);
 				openVoiceChannel();
+				break;
+			case R.id.btnDevCapture://远程抓图
+				FunSupport.getInstance().requestDeviceCapture(mFunDevice);
 				break;
         default:
             break;

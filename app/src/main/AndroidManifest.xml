@@ -411,6 +411,7 @@
         <activity android:name=".devices.settings.intelligentvigilance.view.IntelligentVigilanceActivity" />
         <activity android:name=".devices.settings.remotectrl.view.DevRemoteCtrlActivity" />
         <activity android:name=".cloud.CloudWebActivity" />
+        <activity android:name=".devices.settings.pir.view.PirSetActivity" />
 
 
         <service android:name="com.example.funsdkdemo.alarm.ServiceGuidePushAlarmNotification">

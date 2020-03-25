@@ -113,6 +113,13 @@
                     android:background="@drawable/video_control_button_selector"
                     android:text="@string/device_opt_fisheye_info"
                     android:textColor="@drawable/common_text_selector" />
+
+                <Button
+                    android:id="@+id/btnDevCapture"
+                    style="@style/video_control_button"
+                    android:background="@drawable/video_control_button_selector"
+                    android:text="设备端抓图"
+                    android:textColor="@drawable/common_text_selector" />
             </LinearLayout>
         </HorizontalScrollView>
 
@@ -213,7 +220,7 @@
                 android:src="@drawable/icon_record" />
 
             <ImageButton
-                android:id="@+id/btnDevCapture"
+                android:id="@+id/btnLookDevCapture"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_alignTop="@+id/btnDevRecord"

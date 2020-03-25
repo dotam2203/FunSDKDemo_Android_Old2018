@@ -7,3 +7,8 @@
 /build
 /captures
 .externalNativeBuild
+*.log
+*.apk
+*.ser
+*.json
+*.apk

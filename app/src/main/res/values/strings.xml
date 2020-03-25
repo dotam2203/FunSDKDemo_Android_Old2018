@@ -855,4 +855,11 @@
     <string name="TR_Remote_Ctrl">Remote Ctrl</string>
     <string name="open_cloud_server">Open cloud service webpage</string>
     <string name="cloud_server">Cloud Server</string>
+    <string name="pir_set">PIR</string>
+    <string name="Body_Detect">PIR</string>
+    <string name="Detection_duration">Hover Detection Time</string>
+    <string name="PIR_Detect_Time_Period">PIR detection time period</string>
+    <string name="Start_End_Time">Start and end time</string>
+    <string name="Repeat">Repeat</string>
+    <string name="pir_sensitive">PIR Sensitive</string>
 </resources>
