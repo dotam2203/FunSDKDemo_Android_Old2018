@@ -91,13 +91,6 @@ public class FunSupport implements IFunSDKResult {
     private static final String APP_SECRET = "90f8bc17be2a425db6068c749dee4f5d";
     private static final int APP_MOVECARD = 2;
 
-
-//    private static final String APP_UUID = "90b4eb2b73c44be28baf8d61cfc4f59e";
-//    private static final String APP_KEY = "103fdcef25eb46de91e6f308e98b5d03";
-//    private static final String APP_SECRET = "de3a0cde5c0f45838cae553a34cfe4ab";
-//    private static final int APP_MOVECARD = 6;
-
-    // "42.96.197.189";223.4.33.127
     public static final String SERVER_IP = "223.4.33.127;54.84.132.236;112.124.0.188";
     public static final int SERVER_PORT = 15010; // 更新版本的服务器端口
 
@@ -202,13 +195,6 @@ public class FunSupport implements IFunSDKResult {
         SInitParam param = new SInitParam();
         param.st_0_nAppType = SInitParam.LOGIN_TYPE_MOBILE;
         result = FunSDK.Init(0, G.ObjToBytes(param));
-
-        // Please set the password prefix here
-//		result = FunSDK.InitExV2(0, G.ObjToBytes(param), 4, "GIGA_", "cloudgiga.com.br", 8765);
-        FunLog.i(TAG, "FunSDK.Init:" + result);
-        //set user server IP Port
-//		result = FunSDK.SysSetServerIPPort("MI_SERVER", "cloudgiga.com.br", 80);
-//		FunLog.i(TAG, "FunSDK.InitServerIPPort:" + result);
 
         // 降低隐藏到后台时cpu使用及耗电
         FunSDK.SetApplication((MyApplication)mContext.getApplicationContext());

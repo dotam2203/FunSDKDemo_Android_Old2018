@@ -275,3 +275,4 @@ public class HumanDetectionBean implements Serializable {
         }
     }
 }
+
