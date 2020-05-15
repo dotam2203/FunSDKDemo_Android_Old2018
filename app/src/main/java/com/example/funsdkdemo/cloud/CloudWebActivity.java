@@ -48,7 +48,15 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
-
+/**
+ * https://boss2.xmcsrv.net/index.do?user_id=&uuid=&lan=zh&appKey=&goods=&avatarUrl=
+ * 参数说明：
+ *          user_id,用户唯一标识
+ *          uuid    ,设备序列号
+ *          appKey，开放平台应用appKey
+ *          goods，直接打开套餐标识
+ *          avatarUrl，头像Url地址
+ */
 public class CloudWebActivity extends ActivityDemo {
     private static final String CLOUD_STORAGE_BASE_URL = "https://boss2.xmcsrv.net/index.do";
     public static final String GOODS_TYPE_FLOW = "net.cellular";//流量
@@ -244,6 +252,7 @@ public class CloudWebActivity extends ActivityDemo {
         urlMap.put("lan",lan);
         urlMap.put("appKey",FunSupport.APP_KEY);
         urlMap.put("goods",goodsType);
+        urlMap.put("avatarUrl","");//传入的是头像Url地址
         if (funDevice != null) {
             urlMap.put("uuid", funDevice.getDevSn());
             urlMap.put("devName", funDevice.getDevName());
