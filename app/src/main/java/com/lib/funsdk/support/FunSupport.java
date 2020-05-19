@@ -91,9 +91,6 @@ public class FunSupport implements IFunSDKResult {
     private static final String APP_SECRET = "90f8bc17be2a425db6068c749dee4f5d";
     private static final int APP_MOVECARD = 2;
 
-    public static final String SERVER_IP = "223.4.33.127;54.84.132.236;112.124.0.188";
-    public static final int SERVER_PORT = 15010; // 更新版本的服务器端口
-
     private static FunSupport mInstance = null;
 
     private Context mContext = null;
@@ -208,7 +205,7 @@ public class FunSupport implements IFunSDKResult {
 		// 设置SDK相关配置文件保存路径
 		FunSDK.SetFunStrAttr(EFUN_ATTR.CONFIG_PATH,FunPath.getDeviceConfigPath());
         // 设置以互联网的方式访问
-        result = FunSDK.SysInitNet(SERVER_IP, SERVER_PORT);
+        result = FunSDK.SysInitNet("",0);
         FunLog.i(TAG, "FunSDK.SysInitNet : " + result);
 
         // 初始化APP证书(APP启动后调用一次即可)
@@ -279,19 +276,17 @@ public class FunSupport implements IFunSDKResult {
         return curSSID.equals(funDevice.devName);
     }
 
-    // SetFunStrAttr(EFUN_ATTR.APP_PATH)
     public void setAppPath(String path) {
         FunSDK.SetFunStrAttr(EFUN_ATTR.APP_PATH, path);
     }
 
     public void setLoginType(FunLoginType loginType) {
         if (loginType == FunLoginType.LOGIN_BY_AP) {
-            // FunSDK.SysInitLocal(mDefaultPath);
             FunSDK.SysInitAsAPModle(FunPath.getDeviceApPath());
         } else if (loginType == FunLoginType.LOGIN_BY_LOCAL) {
             FunSDK.SysInitLocal(FunPath.getLocalDB());
         } else {
-            FunSDK.SysInitNet(SERVER_IP, SERVER_PORT);
+            FunSDK.SysInitNet("",0);
         }
         this.mLoginType = loginType;
     }

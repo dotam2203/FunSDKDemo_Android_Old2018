@@ -248,12 +248,12 @@ public class CloudWebActivity extends ActivityDemo {
         }
 
         Map<String, String> urlMap = new LinkedHashMap<>();
-        urlMap.put("user_id", userId);
-        urlMap.put("lan",lan);
-        urlMap.put("appKey",FunSupport.APP_KEY);
-        urlMap.put("goods",goodsType);
-        urlMap.put("avatarUrl","");//传入的是头像Url地址
-        if (funDevice != null) {
+            urlMap.put("user_id", userId);
+            urlMap.put("lan",lan);
+            urlMap.put("appKey",FunSupport.APP_KEY);
+            urlMap.put("goods",goodsType);
+            urlMap.put("avatarUrl","");//传入的是头像Url地址
+            if (funDevice != null) {
             urlMap.put("uuid", funDevice.getDevSn());
             urlMap.put("devName", funDevice.getDevName());
         }
