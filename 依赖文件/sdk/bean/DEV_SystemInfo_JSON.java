@@ -5,43 +5,56 @@ import com.alibaba.fastjson.annotation.JSONField;
 public class DEV_SystemInfo_JSON {
 	
 	@JSONField(name="AlarmInChannel")
-	public Integer alarmInChannel;
+	public Integer alarmInChannel;//告警输入通道数
 	@JSONField(name="AlarmOutChannel")
-	public Integer alarmOutChannel;
+	public Integer alarmOutChannel;//告警输出通道数
 	@JSONField(name="AudioInChannel")
-	public Integer audioInChannel;
+	public Integer audioInChannel;//报警输入路数[0,16]
 	@JSONField(name="BuildTime")
-	public String buildTime;
+	public String buildTime;//编译时间
 	@JSONField(name="CombineSwitch")
 	public Integer combineSwitch;
 	@JSONField(name="DeviceRunTime")
-	public String deviceRunTime;
+	public String deviceRunTime;//16进制要转成10进制，累计时间，单位是分钟
 	@JSONField(name="DigChannel")
-	public Integer digChannel;
+	public Integer digChannel;//
 	@JSONField(name="EncryptVersion")
-	public String encryptVersion;
+	public String encryptVersion;//加密版本号
 	@JSONField(name="ExtraChannel")
-	public Integer extraChannel;
+	public Integer extraChannel;//扩展通道数
 	@JSONField(name="HardWare")
-	public String hardWare;
+	public String hardWare;//硬件标示
 	@JSONField(name="HardWareVersion")
-	public String hardWareVersion;
+	public String hardWareVersion;//硬件版本号
 	@JSONField(name="SerialNo")
-	public String serialNo;
+	public String serialNo;//序列号
 	@JSONField(name="SoftWareVersion")
-	public String softWareVersion;
+	public String softWareVersion;//软件版本号
 	@JSONField(name="TalkInChannel")
-	public Integer talkInChannel;
+	public Integer talkInChannel;//对讲输入通道数
 	@JSONField(name="TalkOutChannel")
-	public Integer talkOutChannel;
+	public Integer talkOutChannel;//对讲输出通道数
 	@JSONField(name="UpdataTime")
-	public String updataTime;
+	public String updataTime;//序修改时间
+
+	/**
+	 * //程序修改内容
+	 * 0x00000001:web,
+	 * 0x00000002:logo,
+	 * 0x00000004:user分区
+	 * 0x00000008:ROMFS
+	 * 0x00000010:配置
+	 * 0x00000020:语言字符串
+	 * 0x00000040:图片
+	 * 0x00000080:其他
+	 */
 	@JSONField(name="UpdataType")
 	public String updataType;
+
 	@JSONField(name="VideoInChannel")
-	public Integer videoInChannel;
+	public Integer videoInChannel;//视频输入通道数
 	@JSONField(name="VideoOutChannel")
-	public Integer videoOutChannel;
+	public Integer videoOutChannel;//视频输出通道数
 	
 	public Integer getAlarmInChannel() {
 		return alarmInChannel;

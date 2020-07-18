@@ -191,8 +191,11 @@ public class FunSupport implements IFunSDKResult {
         // 库初始化1
         SInitParam param = new SInitParam();
         param.st_0_nAppType = SInitParam.LOGIN_TYPE_MOBILE;
-        result = FunSDK.Init(0, G.ObjToBytes(param));
-
+        FunSDK.Init(0, G.ObjToBytes(param));
+        // 如果有定制P2P服务器
+//        SInitParam param = new SInitParam();
+//        param.st_0_nAppType = SInitParam.LOGIN_TYPE_MOBILE;
+//        FunSDK.InitExV2(0, G.ObjToBytes(param),0,"","IP地址",8765);
         // 降低隐藏到后台时cpu使用及耗电
         FunSDK.SetApplication((MyApplication)mContext.getApplicationContext());
         // 库初始化2

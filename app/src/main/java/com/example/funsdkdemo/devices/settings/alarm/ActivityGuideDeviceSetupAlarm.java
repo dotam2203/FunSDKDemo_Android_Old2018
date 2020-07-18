@@ -319,20 +319,20 @@ public class ActivityGuideDeviceSetupAlarm extends ActivityDemo implements OnCli
 			// 移动侦测
 			DetectMotion detectMotion = (DetectMotion)mFunDevice.getConfig(DetectMotion.CONFIG_NAME);
 			if ( null != detectMotion ) {
-				mBtnSwitchMotion.setSelected(detectMotion.Enable);
-				mBtnSwitchMotionRecord.setSelected(detectMotion.event.RecordEnable);
-				mBtnSwitchMotionCapture.setSelected(detectMotion.event.SnapEnable);
-				mBtnSwitchMotionPushMsg.setSelected(detectMotion.event.MessageEnable);
-				mSpinnerDetectionLevel.setSelection(changeLevelToUI(detectMotion.Level));
+				mBtnSwitchMotion.setSelected(detectMotion.Enable);//移动侦测使能
+				mBtnSwitchMotionRecord.setSelected(detectMotion.event.RecordEnable);//联动录像
+				mBtnSwitchMotionCapture.setSelected(detectMotion.event.SnapEnable);//联动抓图
+				mBtnSwitchMotionPushMsg.setSelected(detectMotion.event.MessageEnable);//消息上报（推送）
+				mSpinnerDetectionLevel.setSelection(changeLevelToUI(detectMotion.Level));//报警灵敏度
 			}
 			
 			// 视频遮挡
 			DetectBlind detectBlind = (DetectBlind)mFunDevice.getConfig(DetectBlind.CONFIG_NAME);
 			if ( null != detectBlind ) {
-				mBtnSwitchBlock.setSelected(detectBlind.Enable);
-				mBtnSwitchBlockRecord.setSelected(detectBlind.event.RecordEnable);
-				mBtnSwitchBlockCapture.setSelected(detectBlind.event.SnapEnable);
-				mBtnSwitchBlockPushMsg.setSelected(detectBlind.event.MessageEnable);
+				mBtnSwitchBlock.setSelected(detectBlind.Enable);//视频遮挡使能开关
+				mBtnSwitchBlockRecord.setSelected(detectBlind.event.RecordEnable);//联动录像
+				mBtnSwitchBlockCapture.setSelected(detectBlind.event.SnapEnable);//联动抓图
+				mBtnSwitchBlockPushMsg.setSelected(detectBlind.event.MessageEnable);//消息上报
 			}
 			
 			// 报警输入
