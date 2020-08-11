@@ -1,12 +1,7 @@
-?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.funsdkdemo"
     android:versionCode="200"
     android:versionName="2.0.0" >
-
-    <uses-sdk
-        android:minSdkVersion="17"
-        android:targetSdkVersion="25" />
 
     <!-- <uses-permission android:name="com.example.permission.RECEIVE_MY_BROADCAST" /> -->
     <uses-permission android:name="android.permission.INTERNET" />

@@ -841,4 +841,5 @@
     <string name="Start_End_Time">起止时间</string>
     <string name="Repeat">重复</string>
     <string name="pir_sensitive">PIR灵敏度</string>
+    <string name="download">下载</string>
 </resources>

@@ -1793,6 +1793,26 @@ public class FunSupport implements IFunSDKResult {
     }
 
     /**
+     *下载云存储录像文件
+     * @param funDevices
+     * @param chnId 通道号
+     * @param streamType 码流类型 ：“Main”、“Sub”
+     * @param sTime 开始时间 ，需要通过 FunSDK.ToTimeType接口转
+     * @param eTime 结束时间，需要通过 FunSDK.ToTimeType接口转
+     * @param szFilePath 录像保存地址
+     ** EUIMSG.ON_FILE_DOWNLOAD:下载函数调用结果
+     ** EUIMSG.ON_FILE_DLD_POS:下载进度消息回调
+     ** EUIMSG.ON_FILE_DLD_COMPLETE:下载完成消息回调
+     * @return
+     */
+    public boolean requestDeviceDownloadByCloudFile(FunDevice funDevices,int chnId,String streamType,
+                                                    int sTime,int eTime,String szFilePath) {
+        int result = FunSDK.MediaCloudRecordDownload(getHandler(),funDevices.getDevSn(),
+                chnId,streamType, sTime,eTime,szFilePath,-1);
+        return (result == 1);
+    }
+
+    /**
      * EMSG_ON_FILE_DOWNLOAD:
      * 请求设备开始对讲
      *

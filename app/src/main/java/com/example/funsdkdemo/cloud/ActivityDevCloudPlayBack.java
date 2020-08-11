@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,13 +23,16 @@ import com.lib.FunSDK;
 import com.lib.IFunSDKResult;
 import com.lib.MsgContent;
 import com.lib.cloud.CloudDirectory;
+import com.lib.funsdk.support.FunPath;
 import com.lib.funsdk.support.FunSupport;
+import com.lib.funsdk.support.OnFunDeviceFileListener;
 import com.lib.funsdk.support.models.FunDevice;
 import com.lib.sdk.bean.cloudmedia.CloudMediaFileInfoBean;
 import com.lib.sdk.bean.cloudmedia.CloudMediaFilesBean;
 import com.video.opengl.GLSurfaceView20;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author Administrator
@@ -40,7 +44,7 @@ import java.util.Calendar;
  * @chang time
  * @class describe
  */
-public class ActivityDevCloudPlayBack extends ActivityDemo implements IFunSDKResult{
+public class ActivityDevCloudPlayBack extends ActivityDemo implements IFunSDKResult, OnFunDeviceFileListener {
     private FrameLayout funVideoView;
     private Calendar calendar;
     private FunDevice funDevice;
@@ -70,7 +74,7 @@ public class ActivityDevCloudPlayBack extends ActivityDemo implements IFunSDKRes
         rcFileTime = findViewById(R.id.rc_file_time);
 
         rcFileTime.setLayoutManager(new LinearLayoutManager(this));
-
+        FunSupport.getInstance().registerOnFunDeviceFileListener(this);
         createSurfaceView();
     }
 
@@ -175,6 +179,29 @@ public class ActivityDevCloudPlayBack extends ActivityDemo implements IFunSDKRes
         return 0;
     }
 
+    @Override
+    public void onDeviceFileDownCompleted(FunDevice funDevice, String path, int nSeq) {
+        if (path != null){
+            Toast.makeText(this, "Download Complete!!!" + "Path:" + path, Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(this, "Download Complete!!!" + "Path:" + FunPath.PATH_VIDEO, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onDeviceFileDownProgress(int totalSize, int progress, int nSeq) {
+
+    }
+
+    @Override
+    public void onDeviceFileDownStart(boolean isStartSuccess, int nSeq) {
+        if (isStartSuccess){
+            Toast.makeText(this, "Download Start!!!" , Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(this, "Download Faile!!!" , Toast.LENGTH_LONG).show();
+        }
+    }
+
     class FileTimeAdapter extends RecyclerView.Adapter<FileTimeAdapter.ViewHolder> {
 
         @Override
@@ -205,10 +232,40 @@ public class ActivityDevCloudPlayBack extends ActivityDemo implements IFunSDKRes
 
         class ViewHolder extends RecyclerView.ViewHolder {
             TextView tvFileTime;
+            Button btnDownload;
             public ViewHolder(View itemView) {
                 super(itemView);
                 tvFileTime = itemView.findViewById(R.id.tv_item_name);
+                btnDownload = itemView.findViewById(R.id.btn_download);
+                btnDownload.setVisibility(View.VISIBLE);
+                btnDownload.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        CloudMediaFileInfoBean info = cloudMediaFiles.getFileList().get(getAdapterPosition());
+                        if (info != null) {
+                            downloadRecordFile(info);
+                        }
+                    }
+                });
             }
         }
+    }
+
+    /**
+     * 下载录像文件
+     * @param fileInfoBean
+     */
+    private void downloadRecordFile(CloudMediaFileInfoBean fileInfoBean) {
+        showWaitDialog();
+        Date sDate = fileInfoBean.getStartTimeByYear();
+        Date eDate = fileInfoBean.getEndTimeByYear();
+        int sTime = FunSDK.ToTimeType(new int[]{sDate.getYear() + 1900,sDate.getMonth() + 1,
+                sDate.getDate(),sDate.getHours(),sDate.getMinutes(),
+                sDate.getSeconds()});
+        int eTime = FunSDK.ToTimeType(new int[]{eDate.getYear() + 1900,eDate.getMonth() + 1,
+                eDate.getDate(),eDate.getHours(),eDate.getMinutes(),
+                eDate.getSeconds()});
+        FunSupport.getInstance().requestDeviceDownloadByCloudFile(funDevice,0,
+                "Main",sTime,eTime, FunPath.getRecordPath());
     }
 }
