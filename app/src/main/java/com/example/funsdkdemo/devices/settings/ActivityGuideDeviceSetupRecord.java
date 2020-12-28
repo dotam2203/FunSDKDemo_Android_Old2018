@@ -431,7 +431,7 @@ public class ActivityGuideDeviceSetupRecord extends ActivityDemo implements OnCl
 
 //			if(!getStringRecordMode(mode).equals(recordParam.getRecordMode()))
 //			{
-				recordParam.recordMode = getStringRecordMode(mode == 1 ? 2 : mode);
+				recordParam.recordMode = getStringRecordMode(mode);
 				// 如果是联动配置的话，把普通录像去掉
 				for (int i = 0; i < SDKCONST.NET_N_WEEKS; ++i) {
 					recordParam.mask[i][0] = MyUtils.getHexFromInt(mode == 2 ? 6 : 7);
