@@ -21,8 +21,8 @@ android {
         applicationId "com.example.funsdkdemo"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 201
-        versionName "2.0.1"
+        versionCode 202
+        versionName "2.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
@@ -84,4 +84,5 @@ dependencies {
     implementation files('libs/LibFunSDK.jar')
     implementation files('libs/fastjson-1.2.8.jar')
     implementation files('libs/LibFishEye.jar')
+    implementation files('libs\\LibFunSDK.jar')
 }

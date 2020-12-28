@@ -874,7 +874,9 @@ public class ActivityGuideDeviceCamera
 		FunSupport.getInstance().requestDeviceConfig(mFunDevice, OPPTZPreset.CONFIG_NAME, 0);
 	}
 
-	//请求系统通道能力级
+	/**
+	 * 请求系统通道能力级，只适用于多通道的设备，IPC不要使用该接口
+	 */
 	private void requestChannelSystemFunction() {
 		ChannelSystemFunction channelSystemFunction = new ChannelSystemFunction();
 		FunSupport.getInstance().requestDeviceCmdGeneral(mFunDevice, channelSystemFunction);

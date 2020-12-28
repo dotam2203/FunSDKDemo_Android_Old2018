@@ -187,7 +187,8 @@ public class FunSupport implements IFunSDKResult {
         mSharedParam = new SharedParamMng(context);
         // 导入保存的参数配置
         loadParams();
-
+        //p2p服务对ipv4和ipv6地址的兼容设置
+        FunSDK.SetP2PRegionalScope(0);
         // 库初始化1
         SInitParam param = new SInitParam();
         param.st_0_nAppType = SInitParam.LOGIN_TYPE_MOBILE;
@@ -236,6 +237,12 @@ public class FunSupport implements IFunSDKResult {
             FunSDK.SetFunStrAttr(EFUN_ATTR.USER_PWD_DB, FunPath.getConfigPassword());
             System.out.println("NativePasswordFileName" + FunPath.getConfigPassword());
         }
+
+        /**
+         * 低功耗设备：包括 门铃、门锁等，需要调用此方法否则可能无法登录设备
+         * 其他设备无需调用
+         */
+        FunSDK.SetFunIntAttr(EFUN_ATTR.SUP_RPS_VIDEO_DEFAULT, SDKCONST.Switch.Open);
     }
 
     public void term() {
