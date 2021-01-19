@@ -14,6 +14,7 @@ import com.lib.sdk.struct.SDK_ChannelNameConfigAll;
 
 import org.json.JSONObject;
 
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,9 @@ public class FunDevice {
     private int cloudState;
 
     private long cloudExpired;//到期时间 单位秒
+
+	public ByteBuffer voiceData;
+	public int voiceDataSize;
 	public FunDevice() {
 		
     }

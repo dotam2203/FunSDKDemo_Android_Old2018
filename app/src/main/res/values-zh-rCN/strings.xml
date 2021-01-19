@@ -842,4 +842,18 @@
     <string name="Repeat">重复</string>
     <string name="pir_sensitive">PIR灵敏度</string>
     <string name="download">下载</string>
+    <string name="alarm_sound">报警声</string>
+    <string name="alarm_sound_tip">设备触发报警时，设备发出的声音</string>
+    <string name="alarm_sound_switch_tip">开关打开时，设备如果检测到移动物体，就会发出报警声</string>
+    <string name="alarm_sound_type">报警声类型</string>
+    <string name="alarm_sound_type_tip">请选择报警声</string>
+    <string name="custom_alarm_sound">自定义声音</string>
+    <string name="record_sound">录制提示音</string>
+    <string name="audition">试听</string>
+    <string name="upload_prompt_sound">上传提示音</string>
+    <string name="upload_success">上传成功</string>
+    <string name="upload_failure">上传失败</string>
+    <string name="select_channel">选择通道</string>
+    <string name="select_channel_tip">请选择要发送的通道</string>
+    <string name="channel">通道:</string>
 </resources>

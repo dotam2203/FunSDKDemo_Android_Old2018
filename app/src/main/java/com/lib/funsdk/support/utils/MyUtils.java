@@ -284,4 +284,11 @@ public class MyUtils {
 		String str = String.valueOf(from);
 		return str.length() > 1 ? str : "0" + str;
 	}
+
+	public static String getKey(String name, int channel) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(name).append(".").append("[")
+				.append(channel).append("]");
+		return sb.toString();
+	}
 }

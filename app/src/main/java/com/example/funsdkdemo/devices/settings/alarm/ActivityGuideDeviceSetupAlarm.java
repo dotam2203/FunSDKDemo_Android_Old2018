@@ -37,8 +37,10 @@ import com.lib.funsdk.support.config.DetectBlind;
 import com.lib.funsdk.support.config.DetectMotion;
 import com.lib.funsdk.support.config.LocalAlarm;
 import com.lib.funsdk.support.config.PowerSocketArm;
+import com.lib.funsdk.support.config.SystemFunction;
 import com.lib.funsdk.support.models.FunDevice;
 import com.lib.funsdk.support.models.FunDeviceSocket;
+import com.lib.sdk.bean.DigitalHumanAbility;
 import com.lib.sdk.bean.HandleConfigData;
 import com.lib.sdk.bean.JsonConfig;
 import com.lib.sdk.bean.NetworkPmsBean;
@@ -76,6 +78,7 @@ public class ActivityGuideDeviceSetupAlarm extends ActivityDemo implements OnCli
 	private ImageButton mBtnSwitchAlarmOutStatus = null;
 	private Spinner mSpinnerAlarmOutType = null;
 	private RelativeLayout mRlAlarmTime = null;
+	private RelativeLayout mRlAlarmVoice = null;//报警音
 	private ListSelectItem mLsiAlarmInterval = null;//报警间隔
 	private SeekBar mSbAlarmInterval = null;
 	private String[] mDetectionAlarmLevels = null;
@@ -114,6 +117,8 @@ public class ActivityGuideDeviceSetupAlarm extends ActivityDemo implements OnCli
 
 			//报警输出
 			AlarmOut.CONFIG_NAME,
+
+			SystemFunction.CONFIG_NAME
 	};
 	
 	private final String[] DEV_CONFIGS_FOR_CHANNELS = {
@@ -122,7 +127,9 @@ public class ActivityGuideDeviceSetupAlarm extends ActivityDemo implements OnCli
 			
 			//视频遮挡
 			DetectBlind.CONFIG_NAME,
-			AlarmOut.CONFIG_NAME
+			AlarmOut.CONFIG_NAME,
+
+			SystemFunction.CONFIG_NAME
 	};
 	
 	private String[] DEV_CONFIGS = null;
@@ -131,6 +138,11 @@ public class ActivityGuideDeviceSetupAlarm extends ActivityDemo implements OnCli
 	private List<String> mSettingConfigs = new ArrayList<String>();
 
 	private AlarmPeriodDlg alarmPeriodDlg;
+
+	//是否为IPC报警音
+	private boolean isIPC = false;
+	private DigitalHumanAbility mDigitalHumanAbility;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -188,6 +200,9 @@ public class ActivityGuideDeviceSetupAlarm extends ActivityDemo implements OnCli
 		mSbAlarmInterval.setMax(1770);
 		mSbAlarmInterval.setOnSeekBarChangeListener(this);
 		mLsiAlarmInterval.setOnClickListener(this);
+
+		mRlAlarmVoice = findViewById(R.id.rl_alarm_sound);
+		mRlAlarmVoice.setOnClickListener(this);
 
 		//屏蔽该项设置，只能获取，不能设置
 //		mBtnSwitchAlarmOutStatus.setOnClickListener(this);
@@ -290,6 +305,17 @@ public class ActivityGuideDeviceSetupAlarm extends ActivityDemo implements OnCli
 		case R.id.lsi_alarm_interval:
 			mLsiAlarmInterval.toggleExtraView();
 			break;
+		case R.id.rl_alarm_sound:
+			Intent intent = new Intent(this, ActivityAlarmSoundList.class);
+			Bundle bundle = new Bundle();
+			bundle.putBoolean("isIPC", isIPC);
+			bundle.putInt("FUN_DEVICE_ID", mFunDevice.getId());
+			if (!isIPC && mDigitalHumanAbility != null) {
+				bundle.putSerializable("ability", mDigitalHumanAbility);
+			}
+			intent.putExtra("data", bundle);
+			startActivity(intent);
+			break;
 		}
 	}
 	
@@ -352,9 +378,39 @@ public class ActivityGuideDeviceSetupAlarm extends ActivityDemo implements OnCli
 				mBtnSwitchAlarmOutStatus.setSelected(b);
 				mSpinnerAlarmOutType.setSelection(getPositionOfAlarmOutType(alarmOutInfo.AlarmOutType));
 			}
+
+			SystemFunction systemFunction = (SystemFunction) mFunDevice.getConfig(SystemFunction.CONFIG_NAME);
+			if (systemFunction != null) {
+				for (SystemFunction.FunctionAttr functionAttr : systemFunction.getFunctionAttrs()) {
+					if (functionAttr.name.equals("OtherFunction")) {
+						for (SystemFunction.FunctionItem functionItem : functionAttr.funcs) {
+							//SupportAlarmVoiceTipsType  IPC是否支持报警声类型
+							if ("SupportAlarmVoiceTipsType".equals(functionItem.attrName)) {
+								if (functionItem.isSupport) {
+									isIPC = true;
+									mRlAlarmVoice.setVisibility(View.VISIBLE);
+								}
+								break;
+							}
+						}
+					}
+					if (functionAttr.name.equals("AlarmFunction")) {
+						for (SystemFunction.FunctionItem functionItem : functionAttr.funcs) {
+							//HumanDectionNVRNew  NVR是否支持人形检测功能
+							if ("HumanDectionNVRNew".equals(functionItem.attrName)) {
+								if (functionItem.isSupport) {
+									FunSDK.DevGetConfigByJson(mUserId, mFunDevice.getDevSn(), JsonConfig.NET_DIGITAL_HUMAN_ABILITY, 4096,
+											mFunDevice.CurrChannel, 5000, 1);
+								}
+								break;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
-	
+
 	private int getPositionOfAlarmOutType(String string){
 		if (string.equals("AUTO")) {
 			return 0;
@@ -744,6 +800,19 @@ public class ActivityGuideDeviceSetupAlarm extends ActivityDemo implements OnCli
 					}
 				} else {
 					Toast.makeText(this, R.string.get_config_f, Toast.LENGTH_LONG).show();
+				}
+			}
+		} else if (message.what == EUIMSG.DEV_GET_JSON) {
+			if (JsonConfig.NET_DIGITAL_HUMAN_ABILITY.equals(msgContent.str)) {
+				mDigitalHumanAbility = new DigitalHumanAbility();
+				if (mDigitalHumanAbility.onParse(G.ToString(msgContent.pData),
+						JsonConfig.NET_DIGITAL_HUMAN_ABILITY, mFunDevice.CurrChannel)) {
+					if (mDigitalHumanAbility.isHumanDection()) {
+						isIPC = false;
+						if (mDigitalHumanAbility.isSupportAlarmLinkLight() || mDigitalHumanAbility.isSupportAlarmVoiceTips()) {
+							mRlAlarmVoice.setVisibility(View.VISIBLE);
+						}
+					}
 				}
 			}
 		}

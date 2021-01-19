@@ -863,4 +863,18 @@
     <string name="Repeat">Repeat</string>
     <string name="pir_sensitive">PIR Sensitive</string>
     <string name="download">download</string>
+    <string name="alarm_sound">Alarm Sound</string>
+    <string name="alarm_sound_tip">The sound of a device when it triggers an alarm</string>
+    <string name="alarm_sound_switch_tip">When the switch is on, if the device detects a moving object, it will give an alarm</string>
+    <string name="alarm_sound_type">Alarm Sound Type</string>
+    <string name="alarm_sound_type_tip">Please select alarm sound</string>
+    <string name="custom_alarm_sound">Custom Alarm Sound</string>
+    <string name="record_sound">Record Sound</string>
+    <string name="audition">Play</string>
+    <string name="upload_prompt_sound">Upload</string>
+    <string name="upload_success">Upload successfully</string>
+    <string name="upload_failure">Upload failed</string>
+    <string name="select_channel">Select Channel</string>
+    <string name="select_channel_tip">Please select the channel to send</string>
+    <string name="channel">通道:</string>
 </resources>

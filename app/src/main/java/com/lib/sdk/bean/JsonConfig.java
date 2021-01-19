@@ -181,4 +181,9 @@ public class JsonConfig {
     public static final String CFG_ONE_KEY_MASK_VIDEO = "General.OneKeyMaskVideo";//一键遮蔽
     public static final String CFG_TIMING_SLEEP = "General.TimingSleep";//自动休眠
     public static final String CFG_CHARGE_NO_SHUT_DOWN = "Consumer.ChargeNoShutdown";//充电时休眠
+
+    public static final String NET_DIGITAL_HUMAN_ABILITY = "NetUse.DigitalHumanAbility";//NVR前端人形检测、报警声、报警声类型和报警灯的能力
+    public static final String DETECT_MOTION_DETECT_IPC = "Detect.MotionDetectIPC";//
+    public static final String BROWSER_LANGUAGE = "BrowserLanguage";
+    public static final String ABILITY_VOICE_TIP_TYPE = "Ability.VoiceTipType";//
 }

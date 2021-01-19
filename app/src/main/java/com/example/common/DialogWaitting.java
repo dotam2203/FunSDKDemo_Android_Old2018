@@ -19,7 +19,7 @@ public class DialogWaitting {
 	public DialogWaitting(Context context) {
 		mDialog = new Dialog(context, R.style.dialog_translucent);
 		mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
+
 		mDialog.setContentView(R.layout.dialog_waiting);
 		mTextView = (TextView)mDialog.findViewById(R.id.waittingText);
 	}

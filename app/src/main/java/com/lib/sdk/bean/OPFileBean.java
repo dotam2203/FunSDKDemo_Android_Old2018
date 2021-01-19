@@ -28,6 +28,10 @@ public class OPFileBean {
     private String fileName;
     @JSONField(name = "Parameter")
     private Parameter parameter = new Parameter();
+    @JSONField(name = "FileNumber")
+    private int fileNumber;
+    @JSONField(name = "Action")
+    private String Action;
 
     public Parameter getParameter() {
         return parameter;
@@ -77,9 +81,27 @@ public class OPFileBean {
         this.fileType = fileType;
     }
 
+    public int getFileNumber() {
+        return fileNumber;
+    }
+
+    public void setFileNumber(int fileNumber) {
+        this.fileNumber = fileNumber;
+    }
+
+    public String getAction() {
+        return Action;
+    }
+
+    public void setAction(String action) {
+        Action = action;
+    }
+
     public class Parameter {
         @JSONField(name = "AudioFormat")
         private AudioFormat audioFormat = new AudioFormat();
+        @JSONField(name = "Channel")
+        private int[] channel;//指定通道号发送（支持单通道、多通道、全通道发送）
 
         public AudioFormat getAudioFormat() {
             return audioFormat;
@@ -87,6 +109,14 @@ public class OPFileBean {
 
         public void setAudioFormat(AudioFormat audioFormat) {
             this.audioFormat = audioFormat;
+        }
+
+        public int[] getChannel() {
+            return channel;
+        }
+
+        public void setChannel(int[] channel) {
+            this.channel = channel;
         }
 
         public class AudioFormat {

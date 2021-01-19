@@ -11,6 +11,7 @@ public class EventHandler {
 	public int AlarmOutLatch;
 	public int EventLatch;
 	public int RecordLatch;
+	public int VoiceType = -1;
 	public boolean MailEnable;
 	public boolean MessageEnable;	// push massege to phone
 	public boolean MsgtoNetEnable;
@@ -37,8 +38,11 @@ public class EventHandler {
 	public String AlarmInfo;
 	public Object[][] PtzLink;
 	public String[][] TimeSection;
+
+	private JSONObject mEventHandler;
 	
 	public void parse(JSONObject evnObj) {
+		mEventHandler = evnObj;
 		try {
 			AlarmInfo = evnObj.optString("AlarmInfo");
 			AlarmOutEnable = evnObj.optBoolean("AlarmOutEnable");
@@ -67,6 +71,7 @@ public class EventHandler {
 			PtzEnable = evnObj.optBoolean("PtzEnable");
 			TourEnable = evnObj.optBoolean("TourEnable");
 			ShortMsgEnable = evnObj.optBoolean("ShortMsgEnable");
+			VoiceType = evnObj.optInt("VoiceType");
 			
 			JSONArray PtzLinkArray = evnObj.getJSONArray("PtzLink");
 			if ( null != PtzLinkArray ) {
@@ -105,69 +110,75 @@ public class EventHandler {
 	}
 	
 	public JSONObject toJson() {
-		try {
-			JSONObject evnObj = new JSONObject();
-			evnObj.put("AlarmInfo", AlarmInfo);
-			evnObj.put("AlarmOutEnable", AlarmOutEnable);
-			evnObj.put("AlarmOutLatch", AlarmOutLatch);
-			evnObj.put("AlarmOutMask", AlarmOutMask);
-			evnObj.put("BeepEnable", BeepEnable);
-			evnObj.put("EventLatch", EventLatch);
-			evnObj.put("FTPEnable", FTPEnable);
-			evnObj.put("LogEnable", LogEnable);
-			evnObj.put("MailEnable", MailEnable);
-			evnObj.put("MatrixEnable", MatrixEnable);
-			evnObj.put("MatrixMask", MatrixMask);
-			evnObj.put("MessageEnable", MessageEnable);
-			evnObj.put("MsgtoNetEnable", MsgtoNetEnable);
-			evnObj.put("MultimediaMsgEnable", MultimediaMsgEnable);
-			evnObj.put("PtzEnable", PtzEnable);
-			
-			JSONArray PtzLinkArray = new JSONArray();
-			if ( null != PtzLink ) {
-				for ( int i = 0; i < PtzLink.length; i ++ ) {
-					if ( null != PtzLink[i] && PtzLink[i].length > 0 ) {
-						JSONArray pArray = new JSONArray();
-						for ( int j = 0; j < PtzLink[i].length; j ++ ) {
-							pArray.put(PtzLink[i][j]);
+		if (mEventHandler != null) {
+			try {
+				//此处不创建新的对象，要保证设备发过来什么格式，发给设备也是相同格式的数据
+				JSONObject evnObj = mEventHandler;
+				evnObj.put("AlarmInfo", AlarmInfo);
+				evnObj.put("AlarmOutEnable", AlarmOutEnable);
+				evnObj.put("AlarmOutLatch", AlarmOutLatch);
+				evnObj.put("AlarmOutMask", AlarmOutMask);
+				evnObj.put("BeepEnable", BeepEnable);
+				evnObj.put("EventLatch", EventLatch);
+				evnObj.put("FTPEnable", FTPEnable);
+				evnObj.put("LogEnable", LogEnable);
+				evnObj.put("MailEnable", MailEnable);
+				evnObj.put("MatrixEnable", MatrixEnable);
+				evnObj.put("MatrixMask", MatrixMask);
+				evnObj.put("MessageEnable", MessageEnable);
+				evnObj.put("MsgtoNetEnable", MsgtoNetEnable);
+				evnObj.put("MultimediaMsgEnable", MultimediaMsgEnable);
+				evnObj.put("PtzEnable", PtzEnable);
+
+				JSONArray PtzLinkArray = new JSONArray();
+				if (null != PtzLink) {
+					for (int i = 0; i < PtzLink.length; i++) {
+						if (null != PtzLink[i] && PtzLink[i].length > 0) {
+							JSONArray pArray = new JSONArray();
+							for (int j = 0; j < PtzLink[i].length; j++) {
+								pArray.put(PtzLink[i][j]);
+							}
+							PtzLinkArray.put(pArray);
 						}
-						PtzLinkArray.put(pArray);
 					}
 				}
-			}
-			evnObj.put("PtzLink", PtzLinkArray);
-			
-			evnObj.put("RecordEnable", RecordEnable);
-			evnObj.put("RecordLatch", RecordLatch);
-			evnObj.put("RecordMask", RecordMask);
-			evnObj.put("ShortMsgEnable", ShortMsgEnable);
-			evnObj.put("ShowInfo", ShowInfo);
-			evnObj.put("ShowInfoMask", ShowInfoMask);
-			evnObj.put("SnapEnable", SnapEnable);
-			evnObj.put("SnapShotMask", SnapShotMask);
-			
-			JSONArray TimeSectionArray = new JSONArray();
-			if ( null != TimeSection ) {
-				for ( int i = 0; i < TimeSection.length; i ++ ) {
-					if ( null != TimeSection[i] && TimeSection[i].length > 0 ) {
-						JSONArray pArray = new JSONArray();
-						for ( int j = 0; j < TimeSection[i].length; j ++ ) {
-							pArray.put(TimeSection[i][j]);
+				evnObj.put("PtzLink", PtzLinkArray);
+
+				evnObj.put("RecordEnable", RecordEnable);
+				evnObj.put("RecordLatch", RecordLatch);
+				evnObj.put("RecordMask", RecordMask);
+				evnObj.put("ShortMsgEnable", ShortMsgEnable);
+				evnObj.put("ShowInfo", ShowInfo);
+				evnObj.put("ShowInfoMask", ShowInfoMask);
+				evnObj.put("SnapEnable", SnapEnable);
+				evnObj.put("SnapShotMask", SnapShotMask);
+
+				JSONArray TimeSectionArray = new JSONArray();
+				if (null != TimeSection) {
+					for (int i = 0; i < TimeSection.length; i++) {
+						if (null != TimeSection[i] && TimeSection[i].length > 0) {
+							JSONArray pArray = new JSONArray();
+							for (int j = 0; j < TimeSection[i].length; j++) {
+								pArray.put(TimeSection[i][j]);
+							}
+							TimeSectionArray.put(pArray);
 						}
-						TimeSectionArray.put(pArray);
 					}
 				}
+				evnObj.put("TimeSection", TimeSectionArray);
+
+				evnObj.put("TipEnable", TipEnable);
+				evnObj.put("TourEnable", TourEnable);
+				evnObj.put("TourMask", TourMask);
+				evnObj.put("VoiceEnable", VoiceEnable);
+				if (mEventHandler.has("VoiceType")) {
+					evnObj.put("VoiceType", VoiceType);
+				}
+
+				return evnObj;
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			evnObj.put("TimeSection", TimeSectionArray);
-			
-			evnObj.put("TipEnable", TipEnable);
-			evnObj.put("TourEnable", TourEnable);
-			evnObj.put("TourMask", TourMask);
-			evnObj.put("VoiceEnable", VoiceEnable);
-			
-			return evnObj;
-		} catch (Exception e) {
-			
 		}
 		
 		return null;

@@ -16,6 +16,7 @@ import com.lib.funsdk.support.config.PowerSocketImage;
 import com.lib.funsdk.support.config.RecordParam;
 import com.lib.funsdk.support.config.RecordParamEx;
 import com.lib.funsdk.support.config.SimplifyEncode;
+import com.lib.funsdk.support.config.SystemFunction;
 
 public class DeviceConfigType {
 	//通道相关的配置类型
@@ -38,5 +39,6 @@ public class DeviceConfigType {
 			FVideoOsdLogo.CONFIG_NAME,
 			PowerSocketArm.CONFIG_NAME,
 			AlarmOut.CONFIG_NAME,
+			SystemFunction.CONFIG_NAME,
 	};
 }

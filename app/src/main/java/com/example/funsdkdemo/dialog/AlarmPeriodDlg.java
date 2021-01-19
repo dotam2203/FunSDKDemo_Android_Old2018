@@ -100,7 +100,6 @@ public class AlarmPeriodDlg extends BaseDlg implements OnCheckedChangeListener {
 	}
 
 	private void initData() {
-		mWaitDialog.show();
 		mUserId = FunSDK.RegUser(this);
 		mConfigData = new HandleConfigData<Object>();
 	}
