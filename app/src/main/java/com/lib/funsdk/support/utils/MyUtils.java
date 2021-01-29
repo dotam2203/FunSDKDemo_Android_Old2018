@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.lib.funsdk.support.FunPath;
@@ -14,9 +16,11 @@ import com.lib.sdk.struct.H264_DVR_FINDINFO;
 import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.UUID;
 
 
 public class MyUtils {
+	public static final String PUSH_TOKEN = "push_token";
 	/**
 	 *
 	 * @param capabilities
@@ -89,12 +93,25 @@ public class MyUtils {
 	}
 
 	public static String getMpsPushToken(Context context) {
-		String imei = ((TelephonyManager) context.getSystemService(
-				Context.TELEPHONY_SERVICE)).getDeviceId();
-		if ( null == imei ) {
-			return null;
+		String deviceId = SPUtil.getInstance(context).getSettingParam(PUSH_TOKEN, "");
+		if (TextUtils.isEmpty(deviceId)) {
+			String uuid;
+			String androidId = null;
+			try {
+				androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if (!TextUtils.isEmpty(androidId) && !"9774d56d682e549c".equals(androidId)) {
+				uuid = androidId + System.currentTimeMillis();
+			} else {
+				uuid = UUID.randomUUID().toString() + System.currentTimeMillis();
+			}
+			SPUtil.getInstance(context).setSettingParam(PUSH_TOKEN, uuid);
+			return uuid;
+		} else {
+			return deviceId;
 		}
-		return imei + "funsdkdemo";
 	}
 	
 	// 返回值为是否开启了wifi
