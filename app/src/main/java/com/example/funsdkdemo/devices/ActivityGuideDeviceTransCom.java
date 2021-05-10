@@ -19,6 +19,7 @@ import com.lib.funsdk.support.FunLog;
 import com.lib.funsdk.support.FunSupport;
 import com.lib.funsdk.support.OnFunDeviceOptListener;
 import com.lib.funsdk.support.OnFunDeviceSerialListener;
+import com.lib.funsdk.support.config.UartRS485;
 import com.lib.funsdk.support.models.FunDevice;
 import com.lib.sdk.struct.H264_DVR_FILE_DATA;
 
@@ -242,6 +243,15 @@ public class ActivityGuideDeviceTransCom extends ActivityDemo implements OnClick
 		// 3. 打开串口  - 在设备登录成功之后才能打开串口
 		hideWaitDialog();
 		FunSupport.getInstance().transportSerialOpen(mFunDevice);
+//		if (funDevice != null && funDevice.getDevSn().equals(mFunDevice.getDevSn())) {
+//			// 增加Uart.RS485配置
+//			UartRS485 uartRS485 = (UartRS485) funDevice.getConfig(UartRS485.CONFIG_NAME);
+//			if (uartRS485 != null) {
+//				FunSupport.getInstance().requestDeviceSetConfig(funDevice, uartRS485);
+//			} else {
+//				FunSupport.getInstance().requestDeviceConfig(funDevice, UartRS485.CONFIG_NAME, mFunDevice.CurrChannel);
+//			}
+//		}
 	}
 
 
@@ -255,31 +265,44 @@ public class ActivityGuideDeviceTransCom extends ActivityDemo implements OnClick
 	@Override
 	public void onDeviceGetConfigSuccess(FunDevice funDevice,
 			String configName, int nSeq) {
-		// TODO Auto-generated method stub
-		
+		if (UartRS485.CONFIG_NAME.equals(configName) & funDevice != null) {
+			UartRS485 uartRS485 = (UartRS485) funDevice.getConfig(UartRS485.CONFIG_NAME);
+			if (uartRS485 != null) {
+				FunSupport.getInstance().requestDeviceSetConfig(funDevice, uartRS485);
+			} else {
+				//数据异常，直接打开串口
+				hideWaitDialog();
+				showToast("数据异常，未设置Uart.RS485配置，直接打开串口");
+				FunSupport.getInstance().transportSerialOpen(mFunDevice);
+			}
+		}
 	}
 
 
 	@Override
 	public void onDeviceGetConfigFailed(FunDevice funDevice, Integer errCode) {
-		// TODO Auto-generated method stub
-		
+		//获取Uart.RS485配置失败
+		hideWaitDialog();
+		showToast(FunError.getErrorStr(errCode));
 	}
 
 
 	@Override
 	public void onDeviceSetConfigSuccess(final FunDevice funDevice,
 			final String configName) {
-		// TODO Auto-generated method stub
-		
+		//设置Uart.RS485配置成功，打开串口
+		if (UartRS485.CONFIG_NAME.equals(configName) & funDevice != null) {
+			hideWaitDialog();
+			FunSupport.getInstance().transportSerialOpen(mFunDevice);
+		}
 	}
 
 
 	@Override
 	public void onDeviceSetConfigFailed(final FunDevice funDevice, 
 			final String configName, final Integer errCode) {
-		// TODO Auto-generated method stub
-		
+		hideWaitDialog();
+		showToast(FunError.getErrorStr(errCode));
 	}
 
 

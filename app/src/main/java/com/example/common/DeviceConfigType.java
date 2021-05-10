@@ -17,6 +17,7 @@ import com.lib.funsdk.support.config.RecordParam;
 import com.lib.funsdk.support.config.RecordParamEx;
 import com.lib.funsdk.support.config.SimplifyEncode;
 import com.lib.funsdk.support.config.SystemFunction;
+import com.lib.funsdk.support.config.UartRS485;
 
 public class DeviceConfigType {
 	//通道相关的配置类型
@@ -30,6 +31,7 @@ public class DeviceConfigType {
 			RecordParam.CONFIG_NAME,
 			RecordParamEx.CONFIG_NAME,
 			CameraClearFog.CONFIG_NAME,
+			UartRS485.CONFIG_NAME,
 	};
 	//通道无关的配置类型
 	public static final String[] DeviceConfigCommon = {

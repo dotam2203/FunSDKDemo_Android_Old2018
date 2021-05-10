@@ -109,5 +109,5 @@ public class JsonConfig {
 	public static final String OPERATION_CMD_SET_SWITCH_STATE = "ChangeSwitchState";//改变墙壁开关状态
 	public static final String OPERATION_CMD_SET_CURTAIN_STATE = "ChangeCurtainState";//改变窗帘状态
 	public static final String CHANNEL_SYSTEM_FUNCTION = "ChannelSystemFunction";//系统能力级
-
+	public static final String UART_RS485 = "Uart.RS485";
 }

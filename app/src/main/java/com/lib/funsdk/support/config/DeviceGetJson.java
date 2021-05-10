@@ -73,6 +73,8 @@ public class DeviceGetJson {
         DeviceJsonClassMap.put(CameraWhiteLight.CONFIGNAME, CameraWhiteLight.class);
 
         DeviceJsonClassMap.put(ChannelSystemFunction.CONFIG_NAME, ChannelSystemFunction.class);
+
+		DeviceJsonClassMap.put(UartRS485.CONFIG_NAME, UartRS485.class);
 	}
 	
 	public static BaseConfig buildConfig(String configName) {
